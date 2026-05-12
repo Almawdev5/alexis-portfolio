@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Almaw Tadele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  <!-- Theme flash prevention -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body data-page="services">
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo">Alex'sDev<span>.</span></a>
+      <div class="nav-links">
+        <a class="nav-link" href="../index.html">Home</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="skills.html">Skills</a>
+        <a class="nav-link" href="projects.html">Projects</a>
+        <a class="nav-link active" href="services.html">Services</a>
+        <a class="nav-link" href="certificates.html">Certificates</a>
+        <a class="nav-cta" href="contact.html">Hire Me</a>
+      </div>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile" id="navMobile">
+    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="skills.html">Skills</a>
+    <a class="nav-link" href="projects.html">Projects</a>
+    <a class="nav-link active" href="services.html">Services</a>
+    <a class="nav-link" href="certificates.html">Certificates</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <div class="page-hero-grid"></div>
+      <div class="page-hero-glow"></div>
+    </div>
+    <div class="container page-hero-content">
+      <div class="section-label" style="justify-content:center">What I Offer</div>
+      <h1 class="page-hero-title">My <span class="grad-text">Services</span></h1>
+      <p class="page-hero-sub">From idea to production — I've got you covered.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section">
+    <div class="container">
+      <div id="servicesGrid" class="services-grid">
+        <!-- Rendered by main.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:80px 0;background:var(--bg2);border-top:1px solid var(--border)">
+    <div class="container" style="text-align:center">
+      <div class="reveal">
+        <h2 class="section-title">Ready to start a project?</h2>
+        <p class="section-sub" style="margin:0 auto 28px">Let's discuss your idea and turn it into something great.</p>
+        <a href="contact.html" class="btn btn-primary" style="font-size:.85rem;padding:14px 32px">
+          <i class="fas fa-paper-plane"></i> Contact Me
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">Alex'sDev<span>.</span></div>
+      <div class="footer-copy">© 2025 Almaw Tadele. Built with ❤️ from Addis Ababa.</div>
+      <div class="footer-links">
+        <a href="../index.html" class="footer-link">Home</a>
+        <a href="projects.html" class="footer-link">Projects</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop"><i class="fas fa-arrow-up"></i></button>
+  <script src="../js/data.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

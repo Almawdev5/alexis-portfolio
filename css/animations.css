@@ -1,0 +1,121 @@
+/* ============================================================
+   ALMAW TADELE — Portfolio | animations.css
+   ============================================================ */
+ 
+/* ── KEYFRAMES ─────────────────────────────────────────────── */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-18px); }
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .6; transform: scale(.85); }
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes gradMove {
+  0%,100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+ 
+/* ── SCROLL REVEAL ─────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .65s cubic-bezier(.4,0,.2,1),
+              transform .65s cubic-bezier(.4,0,.2,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity .65s cubic-bezier(.4,0,.2,1),
+              transform .65s cubic-bezier(.4,0,.2,1);
+}
+.reveal-left.visible { opacity:1; transform: translateX(0); }
+ 
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity .65s cubic-bezier(.4,0,.2,1),
+              transform .65s cubic-bezier(.4,0,.2,1);
+}
+.reveal-right.visible { opacity:1; transform: translateX(0); }
+ 
+/* stagger delay helpers */
+.delay-1 { transition-delay: .1s }
+.delay-2 { transition-delay: .2s }
+.delay-3 { transition-delay: .3s }
+.delay-4 { transition-delay: .4s }
+.delay-5 { transition-delay: .5s }
+.delay-6 { transition-delay: .6s }
+ 
+/* ── HERO ENTRY ────────────────────────────────────────────── */
+.hero-tag    { animation: fadeUp .6s ease both .2s }
+.hero-name   { animation: fadeUp .7s ease both .35s }
+.hero-role   { animation: fadeUp .7s ease both .45s }
+.hero-bio    { animation: fadeUp .7s ease both .55s }
+.hero-actions{ animation: fadeUp .7s ease both .65s }
+.hero-stats  { animation: fadeUp .7s ease both .75s }
+.hero-card   { animation: slideLeft .8s ease both .4s }
+ 
+/* ── SKILL BAR ─────────────────────────────────────────────── */
+.skill-bar-fill {
+  animation: none;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+ 
+/* ── GRADIENT ANIMATED TEXT ────────────────────────────────── */
+.grad-anim {
+  background: linear-gradient(270deg, #00f5a0, #00c8ff, #00f5a0);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradMove 4s ease infinite;
+}
+ 
+/* ── TYPING EFFECT ─────────────────────────────────────────── */
+.typing-text { display: inline }
+ 
+/* ── PAGE TRANSITIONS ──────────────────────────────────────── */
+.page-transition {
+  animation: fadeIn .4s ease both;
+}
+ 
+/* ── HOVER GLOW CARD ───────────────────────────────────────── */
+.glow-card {
+  transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease;
+}
+.glow-card:hover {
+  box-shadow: 0 0 40px rgba(0,245,160,.1);
+}

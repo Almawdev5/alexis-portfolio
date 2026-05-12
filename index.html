@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almaw Tadele — Full-Stack Developer & AI Enthusiast</title>
+  <meta name="description" content="Portfolio of Almaw Tadele, Full-Stack Developer and AI Enthusiast based in Addis Ababa, Ethiopia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  <!-- Theme flash prevention -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-page="home">
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#hero" class="nav-logo">Alex'sDev<span>.</span></a>
+      <div class="nav-links" id="navLinks">
+        <a class="nav-link active" href="#hero">Home</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#skills">Skills</a>
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#services">Services</a>
+        <a class="nav-link" href="#certificates">Certificates</a>
+        <a class="nav-cta" href="#contact">Hire Me</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon theme-toggle-icon theme-toggle-moon"></i>
+        <i class="fas fa-sun theme-toggle-icon theme-toggle-sun"></i>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="nav-mobile" id="navMobile">
+    <a class="nav-link" href="#hero">Home</a>
+    <a class="nav-link" href="#about">About</a>
+    <a class="nav-link" href="#skills">Skills</a>
+    <a class="nav-link" href="#projects">Projects</a>
+    <a class="nav-link" href="#services">Services</a>
+    <a class="nav-link" href="#certificates">Certificates</a>
+    <a class="nav-link" href="#contact">Contact</a>
+  </div>
+
+  <!-- ══ HERO ════════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-glow-1"></div>
+      <div class="hero-glow-2"></div>
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="hero-tag"><span class="hero-dot"></span>Available for opportunities</div>
+        <h1 class="hero-name">Hi, I'm<br><span class="grad-text">Almaw Tadele</span></h1>
+        <div class="hero-role"><span id="typingText"></span><span class="cursor"></span></div>
+        <p class="hero-bio">A visionary full-stack engineer building futuristic digital experiences. I merge creativity with code to deliver highly interactive interfaces and seamless user journeys — currently diving deep into the world of AI.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View My Work</a>
+          <a href="#contact"  class="btn btn-outline"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><div class="stat-num" id="statProjects">1+</div><div class="stat-lbl">Projects</div></div>
+          <div class="stat-item"><div class="stat-num" id="statSkills">30+</div><div class="stat-lbl">Skills</div></div>
+          <div class="stat-item"><div class="stat-num" id="statYears">2+</div><div class="stat-lbl">Years Exp.</div></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:20px;">
+          <div class="avatar-ring">
+            <div class="avatar-inner">
+              <img src="assets/img/profile.png" alt="Almaw Tadele"
+                style="width:100%;height:100%;object-fit:cover;object-position:center;border-radius:50%;display:block;"
+                onerror="this.style.display='none';document.getElementById('avatarFallback').style.display='flex'">
+              <div id="avatarFallback" class="avatar-placeholder" style="display:none">AT</div>
+            </div>
+          </div>
+          <div class="hc-name">Almaw Tadele</div>
+          <div class="hc-role">Full-Stack Developer & AI Enthusiast</div>
+        </div>
+        <div class="hc-divider"></div>
+        <div class="hc-info">
+          <div class="hc-item"><i class="fas fa-map-marker-alt"></i><span>Gullele, Addis Ababa, Ethiopia</span></div>
+          <div class="hc-item"><i class="fas fa-envelope"></i><span>almawtadele0@gmail.com</span></div>
+          <div class="hc-item"><i class="fas fa-phone"></i><span>+251961615102</span></div>
+          <div class="hc-item"><i class="fas fa-circle" style="color:#00f5a0;font-size:.5rem"></i><span>Open to work</span></div>
+        </div>
+        <div class="hc-social">
+          <a href="https://github.com/Almawdev5" target="_blank" class="soc-btn"><i class="fab fa-github"></i></a>
+          <a href="https://linkedin.com/in/almaw-tadele-8794a9366" target="_blank" class="soc-btn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://t.me/Almaw16" target="_blank" class="soc-btn"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STRIP -->
+  <div style="padding:36px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2)">
+    <div class="container">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+        <span class="skill-tag"><i class="devicon-python-plain colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>Python</span>
+        <span class="skill-tag"><i class="devicon-javascript-plain colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>JavaScript</span>
+        <span class="skill-tag"><i class="devicon-react-original colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>React</span>
+        <span class="skill-tag"><i class="devicon-nodejs-plain colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>Node.js</span>
+        <span class="skill-tag"><i class="devicon-django-plain colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>Django</span>
+        <span class="skill-tag"><i class="devicon-fastapi-plain colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>FastAPI</span>
+        <span class="skill-tag"><i class="devicon-tensorflow-original colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>TensorFlow</span>
+        <span class="skill-tag"><i class="devicon-pytorch-original colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>PyTorch</span>
+        <span class="skill-tag"><i class="devicon-supabase-plain colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>Supabase</span>
+        <span class="skill-tag"><i class="devicon-nextjs-plain" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>Next.js</span>
+        <span class="skill-tag"><i class="devicon-linux-plain" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>Linux</span>
+        <span class="skill-tag"><i class="devicon-react-original colored" style="font-size:1rem;vertical-align:middle;margin-right:5px;"></i>React Native</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ABOUT ═══════════════════════════════════════════════ -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-wrap reveal-left">
+          <div class="about-img-box">
+            <img src="assets/img/profile.png" alt="Almaw Tadele"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="about-img-placeholder" style="display:none">AT</div>
+          </div>
+          <div class="about-badge">
+            <div class="about-badge-num">2+</div>
+            <div class="about-badge-txt">Years of Experience</div>
+          </div>
+        </div>
+        <div class="about-content reveal-right">
+          <div class="section-label">Who I Am</div>
+          <h2 class="section-title">About <span class="grad-text">Me</span></h2>
+          <p class="about-bio">I'm Almaw, a visionary full-stack engineer building futuristic digital experiences. My passion is creating sleek, scalable, and cutting-edge solutions for the modern web. I merge creativity with code to deliver highly interactive interfaces and seamless user journeys — and I'm currently diving deep into the world of Artificial Intelligence, exploring how AI can elevate the future of software.</p>
+          <div class="about-highlights">
+            <div class="about-hi"><div class="about-hi-icon"><i class="fas fa-code"></i></div><div class="about-hi-title">Clean Code</div><div class="about-hi-txt">Readable, maintainable & scalable.</div></div>
+            <div class="about-hi"><div class="about-hi-icon"><i class="fas fa-brain"></i></div><div class="about-hi-title">AI Explorer</div><div class="about-hi-txt">Building AI-powered applications.</div></div>
+            <div class="about-hi"><div class="about-hi-icon"><i class="fas fa-layer-group"></i></div><div class="about-hi-title">Full-Stack</div><div class="about-hi-txt">End-to-end development expertise.</div></div>
+            <div class="about-hi"><div class="about-hi-icon"><i class="fas fa-users"></i></div><div class="about-hi-title">Community</div><div class="about-hi-txt">Building tools with real-world impact.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap">
+            <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+            <a href="assets/CV.pdf" download class="btn btn-outline"><i class="fas fa-download"></i> Download CV</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SKILLS ══════════════════════════════════════════════ -->
+  <section class="section" id="skills" style="background:var(--bg2)">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Tech Stack</div>
+        <h2 class="section-title">My <span class="grad-text">Skills</span></h2>
+        <p class="section-sub">Tools, languages and frameworks I work with.</p>
+      </div>
+      <div id="skillsGrid" class="skills-grid"></div>
+    </div>
+  </section>
+
+  <!-- ══ PROJECTS ════════════════════════════════════════════ -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Portfolio</div>
+        <h2 class="section-title">My <span class="grad-text">Projects</span></h2>
+        <p class="section-sub">Things I've built, shipped, and learned from.</p>
+      </div>
+      <div id="projectsGrid" class="projects-grid"></div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICES ════════════════════════════════════════════ -->
+  <section class="section" id="services" style="background:var(--bg2)">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">What I Offer</div>
+        <h2 class="section-title">My <span class="grad-text">Services</span></h2>
+        <p class="section-sub">From idea to production — I've got you covered.</p>
+      </div>
+      <div id="servicesGrid" class="services-grid"></div>
+    </div>
+  </section>
+
+  <!-- ══ CERTIFICATES ════════════════════════════════════════ -->
+  <section class="section" id="certificates">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Credentials</div>
+        <h2 class="section-title">My <span class="grad-text">Certificates</span></h2>
+        <p class="section-sub">Verified achievements and completed courses.</p>
+      </div>
+      <div id="certsGrid" class="certs-grid"></div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ══════════════════════════════════════════════ -->
+  <section class="section" id="contact" style="background:var(--bg2)">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Get In Touch</div>
+        <h2 class="section-title">Contact <span class="grad-text">Me</span></h2>
+        <p class="section-sub">Have a project or opportunity? I'd love to hear from you.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal-left">
+          <p class="contact-intro">Whether you have a project idea, a job opportunity, or just want to say hello — my inbox is always open. I'll get back to you as soon as possible!</p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+              <div><div class="contact-item-label">Email</div><div class="contact-item-val">almawtadele0@gmail.com</div></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+              <div><div class="contact-item-label">Phone</div><div class="contact-item-val">+251961615102</div></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div><div class="contact-item-label">Location</div><div class="contact-item-val">Gullele, Addis Ababa, Ethiopia</div></div>
+            </div>
+          </div>
+          <div class="contact-socials">
+            <a href="https://github.com/Almawdev5" target="_blank" class="contact-soc"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/almaw-tadele-8794a9366" target="_blank" class="contact-soc"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://t.me/Almaw16" target="_blank" class="contact-soc"><i class="fab fa-telegram-plane"></i></a>
+          </div>
+        </div>
+        <div class="contact-form-wrap reveal-right">
+          <form id="contactForm" novalidate>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div class="form-group">
+                <label class="form-label" for="fname">First Name</label>
+                <input class="form-input" type="text" id="fname" placeholder="John" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="lname">Last Name</label>
+                <input class="form-input" type="text" id="lname" placeholder="Doe" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="femail">Email</label>
+              <input class="form-input" type="email" id="femail" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fsubject">Subject</label>
+              <input class="form-input" type="text" id="fsubject" placeholder="Project Inquiry" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fmessage">Message</label>
+              <textarea class="form-textarea" id="fmessage" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit" style="width:100%;justify-content:center">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+            <div class="form-status" id="formStatus"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════════ -->
+  <footer class="hf-footer">
+
+    <!-- Animated canvas particles -->
+    <canvas id="footerCanvas" class="hf-canvas"></canvas>
+
+    <!-- Glowing orbs -->
+    <div class="hf-orb hf-orb-1"></div>
+    <div class="hf-orb hf-orb-2"></div>
+    <div class="hf-orb hf-orb-3"></div>
+
+    <!-- Scanline overlay -->
+    <div class="hf-scanlines"></div>
+
+    <div class="hf-content">
+
+      <!-- Big animated name -->
+      <div class="hf-brand">
+        <div class="hf-logo-wrap">
+          <span class="hf-logo-text">Alex'sDev</span>
+          <span class="hf-logo-dot">.</span>
+        </div>
+        <div class="hf-tagline">
+          <span class="hf-tagline-line"></span>
+          <span class="hf-tagline-txt">Full-Stack Developer & AI Enthusiast</span>
+          <span class="hf-tagline-line"></span>
+        </div>
+      </div>
+
+      <!-- Animated nav pills -->
+      <nav class="hf-nav">
+        <a href="#hero"         class="hf-nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="#about"        class="hf-nav-item"><i class="fas fa-user"></i><span>About</span></a>
+        <a href="#skills"       class="hf-nav-item"><i class="fas fa-code"></i><span>Skills</span></a>
+        <a href="#projects"     class="hf-nav-item"><i class="fas fa-rocket"></i><span>Projects</span></a>
+        <a href="#services"     class="hf-nav-item"><i class="fas fa-cogs"></i><span>Services</span></a>
+        <a href="#certificates" class="hf-nav-item"><i class="fas fa-certificate"></i><span>Certs</span></a>
+        <a href="#contact"      class="hf-nav-item"><i class="fas fa-paper-plane"></i><span>Contact</span></a>
+      </nav>
+
+      <!-- Social row with hover glow -->
+      <div class="hf-socials">
+        <a href="https://github.com/Almawdev5" target="_blank" class="hf-soc hf-soc-gh">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+          <div class="hf-soc-glow"></div>
+        </a>
+        <a href="https://linkedin.com/in/almaw-tadele-8794a9366" target="_blank" class="hf-soc hf-soc-li">
+          <i class="fab fa-linkedin-in"></i>
+          <span>LinkedIn</span>
+          <div class="hf-soc-glow"></div>
+        </a>
+        <a href="https://t.me/Almaw16" target="_blank" class="hf-soc hf-soc-tg">
+          <i class="fab fa-telegram-plane"></i>
+          <span>Telegram</span>
+          <div class="hf-soc-glow"></div>
+        </a>
+        <a href="mailto:almawtadele0@gmail.com" class="hf-soc hf-soc-em">
+          <i class="fas fa-envelope"></i>
+          <span>Email</span>
+          <div class="hf-soc-glow"></div>
+        </a>
+      </div>
+
+      <!-- Status bar -->
+      <div class="hf-status-bar">
+        <div class="hf-status-item">
+          <span class="hf-status-dot"></span>
+          <span>Open to work</span>
+        </div>
+        <div class="hf-divider-dot">·</div>
+        <div class="hf-status-item">
+          <i class="fas fa-map-marker-alt" style="color:var(--accent);font-size:.7rem"></i>
+          <span>Addis Ababa, Ethiopia</span>
+        </div>
+        <div class="hf-divider-dot">·</div>
+        <div class="hf-status-item">
+          <i class="fas fa-clock" style="color:var(--accent);font-size:.7rem"></i>
+          <span id="hfTime">--:--</span>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="hf-bottom">
+        <div class="hf-bottom-line"></div>
+        <div class="hf-copy">
+          <span>© 2025</span>
+          <span class="hf-copy-name">Almaw Tadele</span>
+          <span>· Crafted with</span>
+          <span class="hf-heart">❤</span>
+          <span>· All rights reserved</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <style>
+  /* ── HYPER FOOTER ──────────────────────────────────────────── */
+  .hf-footer {
+    position: relative;
+    overflow: hidden;
+    background: #07090d;
+    border-top: 1px solid rgba(0,245,160,.15);
+    padding: 0;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hf-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: .6;
+  }
+  .hf-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(60px);
+  }
+  .hf-orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,245,160,.12) 0%, transparent 70%);
+    bottom: -200px; left: -100px;
+    animation: float 8s ease-in-out infinite;
+  }
+  .hf-orb-2 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(0,200,255,.1) 0%, transparent 70%);
+    top: -100px; right: -50px;
+    animation: float 11s ease-in-out infinite reverse;
+  }
+  .hf-orb-3 {
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(160,0,255,.06) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    animation: float 14s ease-in-out infinite 2s;
+  }
+  .hf-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,.08) 2px,
+      rgba(0,0,0,.08) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+  .hf-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+  }
+
+  /* Brand */
+  .hf-brand { text-align: center }
+  .hf-logo-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 2px;
+    margin-bottom: 14px;
+  }
+  .hf-logo-text {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #00f5a0, #00c8ff, #00f5a0);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradMove 3s linear infinite;
+    letter-spacing: -.03em;
+  }
+  .hf-logo-dot {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 700;
+    color: #00f5a0;
+    animation: pulse 2s ease-in-out infinite;
+    -webkit-text-fill-color: #00f5a0;
+  }
+  .hf-tagline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    justify-content: center;
+  }
+  .hf-tagline-line {
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00f5a0);
+    animation: shimmer 2s ease-in-out infinite alternate;
+  }
+  .hf-tagline-line:last-child {
+    background: linear-gradient(90deg, #00f5a0, transparent);
+  }
+  .hf-tagline-txt {
+    font-family: 'Space Mono', monospace;
+    font-size: .72rem;
+    color: rgba(136,146,164,.8);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Nav */
+  .hf-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .hf-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Space Mono', monospace;
+    font-size: .72rem;
+    color: rgba(136,146,164,.8);
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(30,42,58,.8);
+    background: rgba(13,17,23,.6);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+    letter-spacing: .05em;
+    backdrop-filter: blur(8px);
+  }
+  .hf-nav-item i { font-size: .65rem; color: #00f5a0; transition: all .3s }
+  .hf-nav-item:hover {
+    color: #00f5a0;
+    border-color: rgba(0,245,160,.4);
+    background: rgba(0,245,160,.08);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,245,160,.12);
+  }
+  .hf-nav-item:hover i { transform: scale(1.2) rotate(-10deg) }
+
+  /* Socials */
+  .hf-socials {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hf-soc {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 22px;
+    border-radius: 10px;
+    border: 1px solid rgba(30,42,58,.8);
+    background: rgba(13,17,23,.7);
+    font-family: 'Space Mono', monospace;
+    font-size: .75rem;
+    font-weight: 700;
+    color: rgba(136,146,164,.9);
+    transition: all .35s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    letter-spacing: .04em;
+  }
+  .hf-soc i { font-size: 1rem; transition: transform .3s }
+  .hf-soc-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .35s;
+    border-radius: 10px;
+  }
+  .hf-soc:hover { transform: translateY(-4px); color: #fff }
+  .hf-soc:hover i { transform: scale(1.2) rotate(-8deg) }
+  .hf-soc:hover .hf-soc-glow { opacity: 1 }
+
+  .hf-soc-gh:hover  { border-color: rgba(255,255,255,.3); box-shadow: 0 8px 30px rgba(255,255,255,.08) }
+  .hf-soc-gh .hf-soc-glow { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.06), transparent 70%) }
+
+  .hf-soc-li:hover  { border-color: rgba(0,119,181,.5); box-shadow: 0 8px 30px rgba(0,119,181,.2); color: #0a66c2 }
+  .hf-soc-li .hf-soc-glow { background: radial-gradient(circle at 50% 50%, rgba(0,119,181,.12), transparent 70%) }
+
+  .hf-soc-tg:hover  { border-color: rgba(0,136,204,.5); box-shadow: 0 8px 30px rgba(0,136,204,.2); color: #29b6f6 }
+  .hf-soc-tg .hf-soc-glow { background: radial-gradient(circle at 50% 50%, rgba(0,136,204,.12), transparent 70%) }
+
+  .hf-soc-em:hover  { border-color: rgba(0,245,160,.4); box-shadow: 0 8px 30px rgba(0,245,160,.15); color: #00f5a0 }
+  .hf-soc-em .hf-soc-glow { background: radial-gradient(circle at 50% 50%, rgba(0,245,160,.08), transparent 70%) }
+
+  /* Status bar */
+  .hf-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: .68rem;
+    color: rgba(74,85,104,.9);
+  }
+  .hf-status-dot {
+    width: 7px; height: 7px;
+    background: #00f5a0;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0,245,160,.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .hf-status-item { display: flex; align-items: center; gap: 7px }
+  .hf-divider-dot { color: rgba(30,42,58,1); font-size: 1rem }
+
+  /* Bottom */
+  .hf-bottom { width: 100%; text-align: center }
+  .hf-bottom-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,245,160,.2), rgba(0,200,255,.2), transparent);
+    margin-bottom: 20px;
+    animation: shimmer 3s ease-in-out infinite alternate;
+  }
+  .hf-copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    color: rgba(74,85,104,.8);
+  }
+  .hf-copy-name {
+    background: linear-gradient(135deg,#00f5a0,#00c8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+  .hf-heart {
+    color: #ff6b6b;
+    animation: pulse 1.4s ease-in-out infinite;
+    font-size: .9rem;
+    display: inline-block;
+  }
+
+  @media (max-width: 600px) {
+    .hf-soc span { display: none }
+    .hf-soc { padding: 12px 16px }
+    .hf-tagline-txt { font-size: .6rem; letter-spacing: .06em }
+    .hf-status-bar { gap: 10px }
+    .hf-divider-dot { display: none }
+  }
+  </style>
+
+  <script>
+  // ── FOOTER PARTICLE CANVAS ──────────────────────────────────
+  (function() {
+    const canvas = document.getElementById('footerCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+
+    function Particle() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.r = Math.random() * 1.5 + .3;
+      this.vx = (Math.random() - .5) * .4;
+      this.vy = (Math.random() - .5) * .4;
+      this.alpha = Math.random() * .6 + .1;
+      this.color = Math.random() > .5 ? '0,245,160' : '0,200,255';
+    }
+
+    Particle.prototype.update = function() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > W) this.vx *= -1;
+      if (this.y < 0 || this.y > H) this.vy *= -1;
+    };
+
+    Particle.prototype.draw = function() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color},${this.alpha})`;
+      ctx.fill();
+    };
+
+    function connect() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0,245,160,${.12 * (1 - dist/100)})`;
+            ctx.lineWidth = .5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({length: 60}, () => new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => { p.update(); p.draw(); });
+      connect();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => { resize(); });
+    init();
+    animate();
+
+    // Live clock
+    function updateTime() {
+      const el = document.getElementById('hfTime');
+      if (!el) return;
+      const now = new Date();
+      el.textContent = now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', second:'2-digit', hour12: false, timeZone: 'Africa/Addis_Ababa'});
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+  })();
+  </script>
+
+  <button class="back-top" id="backTop" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

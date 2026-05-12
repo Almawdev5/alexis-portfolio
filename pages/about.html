@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Almaw Tadele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  <!-- Theme flash prevention -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body data-page="about">
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo">Alex'sDev<span>.</span></a>
+      <div class="nav-links" id="navLinks">
+        <a class="nav-link" href="../index.html">Home</a>
+        <a class="nav-link active" href="about.html">About</a>
+        <a class="nav-link" href="skills.html">Skills</a>
+        <a class="nav-link" href="projects.html">Projects</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="certificates.html">Certificates</a>
+        <a class="nav-cta" href="contact.html">Hire Me</a>
+      </div>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile" id="navMobile">
+    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link active" href="about.html">About</a>
+    <a class="nav-link" href="skills.html">Skills</a>
+    <a class="nav-link" href="projects.html">Projects</a>
+    <a class="nav-link" href="services.html">Services</a>
+    <a class="nav-link" href="certificates.html">Certificates</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <div class="page-hero-grid"></div>
+      <div class="page-hero-glow"></div>
+    </div>
+    <div class="container page-hero-content">
+      <div class="section-label" style="justify-content:center">Who I Am</div>
+      <h1 class="page-hero-title">About <span class="grad-text">Me</span></h1>
+      <p class="page-hero-sub">Full-Stack Developer & AI Enthusiast building the future from Addis Ababa.</p>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Image -->
+        <div class="about-img-wrap reveal-left">
+          <div class="about-img-box">
+            <img src="../assets/img/profile.png" alt="Almaw Tadele"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="about-img-placeholder" style="display:none">AT</div>
+          </div>
+          <div class="about-badge">
+            <div class="about-badge-num" id="aboutYears">2+</div>
+            <div class="about-badge-txt">Years of Experience</div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="about-content reveal-right">
+          <div class="section-label">My Story</div>
+          <h2 class="section-title">Crafting Digital<br><span class="grad-text">Experiences</span></h2>
+
+          <p class="about-bio" id="aboutBio">
+            I'm Almaw, a visionary full-stack engineer building futuristic digital experiences.
+            My passion is creating sleek, scalable, and cutting-edge solutions for the modern web.
+            I merge creativity with code to deliver highly interactive interfaces and seamless user
+            journeys — and I'm currently diving deep into the world of Artificial Intelligence,
+            exploring how AI can elevate the future of software.
+          </p>
+
+          <div class="about-highlights">
+            <div class="about-hi">
+              <div class="about-hi-icon"><i class="fas fa-code"></i></div>
+              <div class="about-hi-title">Clean Code</div>
+              <div class="about-hi-txt">Writing readable, maintainable, and scalable code.</div>
+            </div>
+            <div class="about-hi">
+              <div class="about-hi-icon"><i class="fas fa-brain"></i></div>
+              <div class="about-hi-title">AI Explorer</div>
+              <div class="about-hi-txt">Actively learning and building AI-powered applications.</div>
+            </div>
+            <div class="about-hi">
+              <div class="about-hi-icon"><i class="fas fa-layer-group"></i></div>
+              <div class="about-hi-title">Full-Stack</div>
+              <div class="about-hi-txt">Comfortable across the entire web development stack.</div>
+            </div>
+            <div class="about-hi">
+              <div class="about-hi-icon"><i class="fas fa-users"></i></div>
+              <div class="about-hi-title">Community</div>
+              <div class="about-hi-txt">Building tools that create real-world impact.</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;flex-wrap:wrap">
+            <a href="contact.html" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Get In Touch
+            </a>
+            <a href="../assets/CV.pdf" download class="btn btn-outline">
+              <i class="fas fa-download"></i> Download CV
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT I DO -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center">
+        <div class="section-label" style="justify-content:center">Expertise</div>
+        <h2 class="section-title">What I Do Best</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px">
+        <div class="about-hi reveal delay-1" style="padding:24px">
+          <div class="about-hi-icon" style="font-size:1.5rem;margin-bottom:12px"><i class="fas fa-globe"></i></div>
+          <div class="about-hi-title" style="font-size:.95rem;margin-bottom:6px">Web Development</div>
+          <div class="about-hi-txt">End-to-end web apps from design to deployment.</div>
+        </div>
+        <div class="about-hi reveal delay-2" style="padding:24px">
+          <div class="about-hi-icon" style="font-size:1.5rem;margin-bottom:12px"><i class="fas fa-robot"></i></div>
+          <div class="about-hi-title" style="font-size:.95rem;margin-bottom:6px">AI & ML</div>
+          <div class="about-hi-txt">Building intelligent systems and data pipelines.</div>
+        </div>
+        <div class="about-hi reveal delay-3" style="padding:24px">
+          <div class="about-hi-icon" style="font-size:1.5rem;margin-bottom:12px"><i class="fas fa-mobile-alt"></i></div>
+          <div class="about-hi-title" style="font-size:.95rem;margin-bottom:6px">Mobile Apps</div>
+          <div class="about-hi-txt">Cross-platform apps with React Native.</div>
+        </div>
+        <div class="about-hi reveal delay-4" style="padding:24px">
+          <div class="about-hi-icon" style="font-size:1.5rem;margin-bottom:12px"><i class="fas fa-chart-bar"></i></div>
+          <div class="about-hi-title" style="font-size:.95rem;margin-bottom:6px">Data Analysis</div>
+          <div class="about-hi-txt">Turning data into insights with Python tools.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">Alex'sDev<span>.</span></div>
+      <div class="footer-copy">© 2025 Almaw Tadele. Built with ❤️ from Addis Ababa.</div>
+      <div class="footer-links">
+        <a href="../index.html" class="footer-link">Home</a>
+        <a href="projects.html" class="footer-link">Projects</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop"><i class="fas fa-arrow-up"></i></button>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

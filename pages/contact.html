@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Almaw Tadele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  <!-- Theme flash prevention -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body data-page="contact">
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo">Alex'sDev<span>.</span></a>
+      <div class="nav-links">
+        <a class="nav-link" href="../index.html">Home</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="skills.html">Skills</a>
+        <a class="nav-link" href="projects.html">Projects</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="certificates.html">Certificates</a>
+        <a class="nav-cta active" href="contact.html">Hire Me</a>
+      </div>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile" id="navMobile">
+    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="skills.html">Skills</a>
+    <a class="nav-link" href="projects.html">Projects</a>
+    <a class="nav-link" href="services.html">Services</a>
+    <a class="nav-link" href="certificates.html">Certificates</a>
+    <a class="nav-link active" href="contact.html">Contact</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <div class="page-hero-grid"></div>
+      <div class="page-hero-glow"></div>
+    </div>
+    <div class="container page-hero-content">
+      <div class="section-label" style="justify-content:center">Get In Touch</div>
+      <h1 class="page-hero-title">Contact <span class="grad-text">Me</span></h1>
+      <p class="page-hero-sub">Have a project or opportunity? I'd love to hear from you.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Info -->
+        <div class="contact-info reveal-left">
+          <div class="section-label">Reach Out</div>
+          <h2 class="section-title">Let's <span class="grad-text">Talk</span></h2>
+          <p class="contact-intro">
+            Whether you have a project idea, a job opportunity, or just want to say hello —
+            my inbox is always open. I'll get back to you as soon as possible!
+          </p>
+
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <div class="contact-item-label">Email</div>
+                <div class="contact-item-val" id="contactEmail">almawtadele0@gmail.com</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <div class="contact-item-label">Phone</div>
+                <div class="contact-item-val" id="contactPhone">+251961615102</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <div class="contact-item-label">Location</div>
+                <div class="contact-item-val" id="contactLoc">Gullele, Addis Ababa, Ethiopia</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-socials" id="contactSocials">
+            <a href="https://github.com/Almawdev5" target="_blank" class="contact-soc" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/almaw-tadele-8794a9366" target="_blank" class="contact-soc" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://t.me/Almaw16" target="_blank" class="contact-soc" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="contact-form-wrap reveal-right">
+          <form id="contactForm" novalidate>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div class="form-group">
+                <label class="form-label" for="fname">First Name</label>
+                <input class="form-input" type="text" id="fname" name="fname" placeholder="John" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="lname">Last Name</label>
+                <input class="form-input" type="text" id="lname" name="lname" placeholder="Doe" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="femail">Email</label>
+              <input class="form-input" type="email" id="femail" name="email" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fsubject">Subject</label>
+              <input class="form-input" type="text" id="fsubject" name="subject" placeholder="Project Inquiry" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fmessage">Message</label>
+              <textarea class="form-textarea" id="fmessage" name="message" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+            <div class="form-status" id="formStatus"></div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">Alex'sDev<span>.</span></div>
+      <div class="footer-copy">© 2025 Almaw Tadele. Built with ❤️ from Addis Ababa.</div>
+      <div class="footer-links">
+        <a href="../index.html" class="footer-link">Home</a>
+        <a href="projects.html" class="footer-link">Projects</a>
+        <a href="about.html" class="footer-link">About</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop"><i class="fas fa-arrow-up"></i></button>
+  <script src="../js/data.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
