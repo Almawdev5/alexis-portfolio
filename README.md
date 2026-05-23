@@ -81,6 +81,7 @@ To add new page-specific rendering support, update `js/main.js` where page routi
 - Phone: `+251961615102`
 - GitHub: `https://github.com/Almawdev5`
 - LinkedIn: `https://linkedin.com/in/almaw-tadele-8794a9366`
+- Telegram: `https://t.me/Almaw66`
 
 ---
 
