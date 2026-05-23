@@ -4,7 +4,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  const d = portfolioData;
+  const STORE_KEY = 'alexPortfolioData';
+  const saved = localStorage.getItem(STORE_KEY);
+  const d = saved ? JSON.parse(saved) : portfolioData;
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   const page = document.body.dataset.page;
@@ -277,7 +279,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── PAGE ROUTING ────────────────────────────────────────────
   if (page === 'home') {
-    // Render everything inline on homepage
+    const p = d.personal;
+
+    // ── Hero ──
+    const heroName = document.getElementById('heroName');
+    const heroBio  = document.getElementById('heroBio');
+    if (heroName) heroName.textContent = p.name;
+    if (heroBio)  heroBio.textContent  = p.bio;
+
+    // ── Hero Card ──
+    const hcName     = document.getElementById('hcName');
+    const hcRole     = document.getElementById('hcRole');
+    const hcLocation = document.getElementById('hcLocation');
+    const hcEmail    = document.getElementById('hcEmail');
+    const hcPhone    = document.getElementById('hcPhone');
+    if (hcName)     hcName.textContent     = p.name;
+    if (hcRole)     hcRole.textContent     = p.tagline;
+    if (hcLocation) hcLocation.textContent = p.location;
+    if (hcEmail)    hcEmail.textContent    = p.email;
+    if (hcPhone)    hcPhone.textContent    = p.phone;
+
+    // ── Social links in card ──
+    const hcSocial = document.getElementById('hcSocial');
+    if (hcSocial) {
+      hcSocial.innerHTML = d.social.map(s =>
+        `<a href="${s.url}" target="_blank" class="soc-btn" title="${s.name}"><i class="${s.icon}"></i></a>`
+      ).join('');
+    }
+
+    // ── About section ──
+    const aboutYears = document.getElementById('aboutYears');
+    const aboutBio   = document.getElementById('aboutBio');
+    if (aboutYears) aboutYears.textContent = p.yearsOfExperience + '+';
+    if (aboutBio)   aboutBio.textContent   = p.bio;
+
+    // ── Contact section ──
+    const contactItems = document.getElementById('contactItems');
+    if (contactItems) {
+      contactItems.innerHTML = `
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+          <div><div class="contact-item-label">Email</div><div class="contact-item-val">${p.email}</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+          <div><div class="contact-item-label">Phone</div><div class="contact-item-val">${p.phone}</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><div class="contact-item-label">Location</div><div class="contact-item-val">${p.location}</div></div>
+        </div>`;
+    }
+
+    // ── Contact socials ──
+    const contactSocials = document.getElementById('contactSocials');
+    if (contactSocials) {
+      contactSocials.innerHTML = d.social.map(s =>
+        `<a href="${s.url}" target="_blank" class="contact-soc" title="${s.name}"><i class="${s.icon}"></i></a>`
+      ).join('');
+    }
+
+    // ── Stats ──
+    const sp = document.getElementById('statProjects');
+    const ss = document.getElementById('statSkills');
+    const sy = document.getElementById('statYears');
+    if (sp) sp.textContent = d.projects.filter(p => p.live !== '#').length + '+';
+    if (ss) ss.textContent = d.skills.reduce((a, s) => a + s.items.length, 0) + '+';
+    if (sy) sy.textContent = p.yearsOfExperience + '+';
+
+    // Render all sections
     renderSkills('#skillsGrid');
     renderProjects('#projectsGrid', '');
     renderServices('#servicesGrid');
