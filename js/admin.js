@@ -192,10 +192,12 @@ window.editProject = function(i) {
   $('projectModalTitle').textContent = 'Edit Project';
   $('proj-name').value     = p.name;
   $('proj-desc').value     = p.description;
+  $('proj-longdesc').value = p.longDescription || '';
   $('proj-live').value     = p.live;
   $('proj-github').value   = p.github;
   $('proj-tech').value     = p.tech.join(', ');
   $('proj-image').value    = p.image;
+  $('proj-images').value   = (p.images || []).join(', ');
   $('proj-featured').value = p.featured ? 'true' : 'false';
   openModal('projectModal');
 };
@@ -219,14 +221,19 @@ $('addProjectBtn').addEventListener('click', () => {
 
 $('saveProjectBtn').addEventListener('click', () => {
   const data    = loadData();
+  const allImages = $('proj-images').value.split(',').map(s => s.trim()).filter(Boolean);
+  const mainImage = $('proj-image').value.trim() || 'assets/img/project-demo.png';
+  const images    = [mainImage, ...allImages.filter(img => img !== mainImage)];
   const project = {
-    name:        $('proj-name').value.trim(),
-    description: $('proj-desc').value.trim(),
-    live:        $('proj-live').value.trim()   || '#',
-    github:      $('proj-github').value.trim() || '#',
-    tech:        $('proj-tech').value.split(',').map(t => t.trim()).filter(Boolean),
-    image:       $('proj-image').value.trim()  || 'assets/img/project-demo.png',
-    featured:    $('proj-featured').value === 'true',
+    name:            $('proj-name').value.trim(),
+    description:     $('proj-desc').value.trim(),
+    longDescription: $('proj-longdesc').value.trim(),
+    live:            $('proj-live').value.trim()   || '#',
+    github:          $('proj-github').value.trim() || '#',
+    tech:            $('proj-tech').value.split(',').map(t => t.trim()).filter(Boolean),
+    image:           mainImage,
+    images:          images,
+    featured:        $('proj-featured').value === 'true',
   };
   if (!project.name) { toast('Project name is required!', 'error'); return; }
   if (editProjectIdx > -1) data.projects[editProjectIdx] = project;

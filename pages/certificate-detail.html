@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificate — Alex'sDev</title>
+  <script>(function(){ var t=localStorage.getItem('theme')||'dark'; document.documentElement.setAttribute('data-theme',t); })();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    .cert-detail-wrap { min-height:100vh; padding-top:var(--nav); background:var(--bg) }
+    .cert-hero { position:relative; padding:60px 0 80px; overflow:hidden }
+    .cert-hero-bg { position:absolute; inset:0; background-image:linear-gradient(rgba(0,245,160,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,160,.04) 1px,transparent 1px); background-size:50px 50px; pointer-events:none }
+    .cert-hero-glow { position:absolute; width:600px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(0,245,160,.07) 0%,transparent 70%); top:-100px; right:-100px; pointer-events:none; animation:float 9s ease-in-out infinite }
+    .cert-hero-content { position:relative; z-index:1 }
+    .cert-breadcrumb { display:flex; align-items:center; gap:8px; font-family:var(--fm); font-size:.68rem; color:var(--text3); margin-bottom:32px }
+    .cert-breadcrumb a { color:var(--text2); transition:var(--tr) }
+    .cert-breadcrumb a:hover { color:var(--accent) }
+    .cert-detail-grid { display:grid; grid-template-columns:1fr 400px; gap:48px; align-items:start }
+    .cert-image-main { border-radius:var(--r3); overflow:hidden; border:1px solid var(--border); background:var(--bg3); position:relative; cursor:zoom-in; transition:var(--tr) }
+    .cert-image-main:hover { box-shadow:0 0 40px rgba(0,245,160,.1); border-color:var(--accent-b) }
+    .cert-image-main img { width:100%; display:block; transition:var(--tr) }
+    .cert-image-main:hover img { transform:scale(1.02) }
+    .cert-zoom-hint { position:absolute; bottom:14px; right:14px; background:rgba(0,0,0,.6); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:6px 12px; font-family:var(--fm); font-size:.62rem; color:rgba(255,255,255,.7); display:flex; align-items:center; gap:6px; pointer-events:none }
+    .cert-info-card { background:var(--bg3); border:1px solid var(--border); border-radius:var(--r2); padding:32px; position:relative; overflow:hidden }
+    .cert-info-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--grad) }
+    .cert-badge { display:inline-flex; align-items:center; gap:8px; font-family:var(--fm); font-size:.65rem; color:var(--accent); background:var(--accent-d); border:1px solid var(--accent-b); padding:5px 12px; border-radius:100px; letter-spacing:.1em; margin-bottom:18px }
+    .cert-badge-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s ease-in-out infinite }
+    .cert-info-title { font-size:1.6rem; font-weight:800; letter-spacing:-.02em; line-height:1.2; margin-bottom:8px }
+    .cert-divider { height:1px; background:var(--border); margin:22px 0 }
+    .cert-meta-list { display:flex; flex-direction:column; gap:14px; margin-bottom:22px }
+    .cert-meta-item { display:flex; align-items:center; gap:14px }
+    .cert-meta-icon { width:36px; height:36px; border-radius:var(--r); background:var(--accent-d); border:1px solid var(--accent-b); display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:.8rem; flex-shrink:0 }
+    .cert-meta-label { font-family:var(--fm); font-size:.6rem; color:var(--text3); letter-spacing:.1em; text-transform:uppercase; margin-bottom:2px }
+    .cert-meta-val { font-size:.88rem; color:var(--text); font-weight:600 }
+    .cert-description { font-size:.88rem; color:var(--text2); line-height:1.85; margin-bottom:28px }
+    .cert-action-btn { display:flex; align-items:center; justify-content:center; gap:9px; padding:12px; border-radius:var(--r); font-family:var(--fm); font-size:.75rem; font-weight:700; letter-spacing:.05em; cursor:pointer; transition:var(--tr); border:none; text-decoration:none; margin-bottom:10px }
+    .cert-action-primary { background:var(--accent); color:var(--bg) }
+    .cert-action-primary:hover { box-shadow:0 0 20px var(--accent-b); transform:translateY(-2px) }
+    .cert-action-secondary { background:var(--bg2); color:var(--text2); border:1px solid var(--border) !important }
+    .cert-action-secondary:hover { border-color:var(--accent) !important; color:var(--accent); transform:translateY(-2px) }
+    .cert-lightbox { position:fixed; inset:0; background:rgba(0,0,0,.92); backdrop-filter:blur(16px); z-index:2000; display:none; align-items:center; justify-content:center; padding:20px; cursor:zoom-out }
+    .cert-lightbox.open { display:flex }
+    .cert-lightbox img { max-width:90vw; max-height:90vh; border-radius:var(--r2); box-shadow:0 24px 80px rgba(0,0,0,.8); border:1px solid rgba(0,245,160,.2) }
+    .cert-lightbox-close { position:absolute; top:20px; right:20px; width:44px; height:44px; border-radius:var(--r); background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15); color:#fff; font-size:1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:var(--tr) }
+    .cert-lightbox-close:hover { background:rgba(255,80,80,.3) }
+    .cert-not-found { text-align:center; padding:120px 24px }
+    .cert-not-found i { font-size:4rem; color:var(--text3); display:block; margin-bottom:20px }
+    @media(max-width:768px){ .cert-detail-grid{grid-template-columns:1fr;gap:28px} .cert-info-card{padding:22px} .cert-info-title{font-size:1.3rem} }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo">Alex'sDev<span>.</span></a>
+      <div class="nav-links">
+        <a class="nav-link" href="../index.html">Home</a>
+        <a class="nav-link" href="../index.html#about">About</a>
+        <a class="nav-link" href="../index.html#skills">Skills</a>
+        <a class="nav-link" href="../index.html#projects">Projects</a>
+        <a class="nav-link" href="../index.html#services">Services</a>
+        <a class="nav-link active" href="../index.html#certificates">Certificates</a>
+        <a class="nav-cta" href="../index.html#contact">Hire Me</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon theme-toggle-icon theme-toggle-moon"></i>
+        <i class="fas fa-sun theme-toggle-icon theme-toggle-sun"></i>
+      </button>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile" id="navMobile">
+    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link active" href="../index.html#certificates">Certificates</a>
+    <a class="nav-link" href="../index.html#contact">Contact</a>
+  </div>
+
+  <div class="cert-detail-wrap">
+    <div id="certContent"></div>
+  </div>
+
+  <div class="cert-lightbox" id="certLightbox">
+    <button class="cert-lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+    <img id="lightboxImg" src="" alt="Certificate">
+  </div>
+
+  <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:24px 0">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div class="footer-logo">Alex'sDev<span>.</span></div>
+      <div style="font-family:var(--fm);font-size:.68rem;color:var(--text3)">© 2025 Almaw Tadele</div>
+      <a href="../index.html#certificates" style="font-family:var(--fm);font-size:.68rem;color:var(--text2)">← Back to Certificates</a>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop"><i class="fas fa-arrow-up"></i></button>
+
+  <script src="../js/data.js"></script>
+  <script>
+    // Theme
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Navbar
+    const navbar = document.getElementById('navbar');
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+      backTop.classList.toggle('visible', window.scrollY > 400);
+    });
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('navToggle').addEventListener('click', function() {
+      this.classList.toggle('open');
+      document.getElementById('navMobile').classList.toggle('open');
+    });
+
+    // Load data
+    const saved = localStorage.getItem('alexPortfolioData');
+    const data  = saved ? JSON.parse(saved) : portfolioData;
+
+    // Get cert by index from URL
+    const idx  = parseInt(new URLSearchParams(window.location.search).get('id'));
+    const cert = data.certificates[idx];
+    const el   = document.getElementById('certContent');
+
+    if (!cert || isNaN(idx)) {
+      el.innerHTML = `
+        <div class="cert-not-found">
+          <i class="fas fa-certificate"></i>
+          <h2>Certificate Not Found</h2>
+          <p style="color:var(--text2);margin-bottom:24px">This certificate doesn't exist or may have been removed.</p>
+          <a href="../index.html#certificates" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Certificates</a>
+        </div>`;
+    } else {
+      const imgFile = cert.image.split('/').pop().replace(/ /g, '%20');
+      const imgSrc  = `../assets/img/${imgFile}`;
+      document.title = `${cert.title} — Alex'sDev`;
+
+      el.innerHTML = `
+        <section class="cert-hero">
+          <div class="cert-hero-bg"></div>
+          <div class="cert-hero-glow"></div>
+          <div class="cert-hero-content">
+            <div class="container">
+              <div class="cert-breadcrumb">
+                <a href="../index.html">Home</a>
+                <i class="fas fa-chevron-right" style="font-size:.5rem"></i>
+                <a href="../index.html#certificates">Certificates</a>
+                <i class="fas fa-chevron-right" style="font-size:.5rem"></i>
+                <span style="color:var(--accent)">${cert.title}</span>
+              </div>
+              <div class="cert-detail-grid">
+                <div class="reveal-left">
+                  <div class="cert-image-main" id="openLightbox">
+                    <img src="${imgSrc}" alt="${cert.title}"
+                      onerror="this.parentElement.innerHTML='<div style=height:300px;display:flex;align-items:center;justify-content:center;color:var(--text3)><i class=fas fa-certificate style=font-size:4rem;opacity:.2></i></div>'">
+                    <div class="cert-zoom-hint"><i class="fas fa-search-plus"></i> Click to zoom</div>
+                  </div>
+                </div>
+                <div class="reveal-right">
+                  <div class="cert-info-card">
+                    <div class="cert-badge"><span class="cert-badge-dot"></span>Verified Certificate</div>
+                    <div class="cert-info-title">${cert.title}</div>
+                    <div class="cert-divider"></div>
+                    <div class="cert-meta-list">
+                      <div class="cert-meta-item">
+                        <div class="cert-meta-icon"><i class="fas fa-building"></i></div>
+                        <div><div class="cert-meta-label">Issued By</div><div class="cert-meta-val">${cert.issuer}</div></div>
+                      </div>
+                      <div class="cert-meta-item">
+                        <div class="cert-meta-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div><div class="cert-meta-label">Year</div><div class="cert-meta-val">${cert.year}</div></div>
+                      </div>
+                      <div class="cert-meta-item">
+                        <div class="cert-meta-icon"><i class="fas fa-user"></i></div>
+                        <div><div class="cert-meta-label">Awarded To</div><div class="cert-meta-val">${data.personal.name}</div></div>
+                      </div>
+                    </div>
+                    <div class="cert-divider"></div>
+                    <p class="cert-description">${cert.description}</p>
+                    <button class="cert-action-btn cert-action-primary" id="openLightboxBtn"><i class="fas fa-expand"></i> View Full Image</button>
+                    <a href="../index.html#certificates" class="cert-action-btn cert-action-secondary"><i class="fas fa-arrow-left"></i> Back to Certificates</a>
+                  </div>
+                  <div style="display:flex;gap:10px;margin-top:14px">
+                    ${idx > 0 ? `<a href="certificate-detail.html?id=${idx-1}" class="btn btn-outline" style="flex:1;justify-content:center;font-size:.72rem"><i class="fas fa-chevron-left"></i> Previous</a>` : ''}
+                    ${idx < data.certificates.length-1 ? `<a href="certificate-detail.html?id=${idx+1}" class="btn btn-outline" style="flex:1;justify-content:center;font-size:.72rem">Next <i class="fas fa-chevron-right"></i></a>` : ''}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>`;
+
+      // Lightbox
+      const lightbox = document.getElementById('certLightbox');
+      const lbImg    = document.getElementById('lightboxImg');
+      const open = () => { lbImg.src = imgSrc; lightbox.classList.add('open'); document.body.style.overflow='hidden' };
+      const close = () => { lightbox.classList.remove('open'); document.body.style.overflow='' };
+      document.getElementById('openLightbox')?.addEventListener('click', open);
+      document.getElementById('openLightboxBtn')?.addEventListener('click', open);
+      document.getElementById('lightboxClose').addEventListener('click', close);
+      lightbox.addEventListener('click', e => { if(e.target===lightbox) close(); });
+      document.addEventListener('keydown', e => { if(e.key==='Escape') close(); });
+
+      // Reveal
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, {threshold:.1});
+      document.querySelectorAll('.reveal-left,.reveal-right').forEach(el => obs.observe(el));
+    }
+  </script>
+</body>
+</html>

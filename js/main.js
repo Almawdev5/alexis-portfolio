@@ -180,12 +180,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!grid) return;
     d.projects.forEach((p, i) => {
       const isDemo = p.live === '#' && p.github === '#';
+      const imgSrc = imgPrefix + (p.image || 'assets/img/project-demo1.png');
       const card = document.createElement('div');
       card.className = `project-card glow-card reveal${p.featured ? ' featured' : ''}`;
       card.style.transitionDelay = `${i * 0.1}s`;
+      card.style.cursor = 'pointer';
       card.innerHTML = `
         <div class="project-img">
-          <img src="${imgPrefix}${p.image}" alt="${p.name}"
+          <img src="${imgSrc}" alt="${p.name}"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="project-img-placeholder" style="display:none"><i class="fas fa-code"></i></div>
           ${p.featured ? '<span class="project-feat-badge">⭐ Featured</span>' : ''}
@@ -195,14 +198,18 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="project-desc">${p.description}</div>
           <div class="project-tech">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
           <div class="project-links">
-            <a href="${p.live}" target="_blank" class="project-link live${isDemo ? ' disabled' : ''}">
+            <a href="${p.live}" target="_blank" class="project-link live${isDemo ? ' disabled' : ''}" onclick="event.stopPropagation()">
               <i class="fas fa-external-link-alt"></i>${isDemo ? 'Coming Soon' : 'Live Demo'}
             </a>
-            <a href="${p.github}" target="_blank" class="project-link github${isDemo ? ' disabled' : ''}">
+            <a href="${p.github}" target="_blank" class="project-link github${isDemo ? ' disabled' : ''}" onclick="event.stopPropagation()">
               <i class="fab fa-github"></i>GitHub
             </a>
           </div>
         </div>`;
+      card.addEventListener('click', () => {
+        const detailPage = imgPrefix === '' ? 'pages/project-detail.html' : 'project-detail.html';
+        window.location.href = `${detailPage}?id=${i}`;
+      });
       grid.appendChild(card);
       observer.observe(card);
     });
@@ -252,6 +259,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="cert-desc">${c.description}</div>
         </div>`;
+      card.style.cursor = 'pointer';
+      card.title = 'Click to view details';
+      card.addEventListener('click', () => {
+        const detailPage = imgPrefix === '' ? 'pages/certificate-detail.html' : 'certificate-detail.html';
+        window.location.href = `${detailPage}?id=${i}`;
+      });
       grid.appendChild(card);
       observer.observe(card);
     });
