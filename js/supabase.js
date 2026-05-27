@@ -95,6 +95,7 @@ async function loadPortfolioFromDB() {
         yearsOfExperience: personal?.years_of_experience || portfolioData.personal.yearsOfExperience,
         avatar:            personal?.avatar             || portfolioData.personal.avatar,
         resume:            personal?.resume             || portfolioData.personal.resume,
+        aboutBio:          personal?.about_bio            || portfolioData.personal.bio,
         _id:               personal?.id,
       },
       social: social.length ? social.map(s => ({

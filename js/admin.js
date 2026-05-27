@@ -186,7 +186,8 @@ async function renderPersonal() {
   $('p-id').value       = p.id       || '';
   $('p-name').value     = p.name     || '';
   $('p-tagline').value  = p.tagline  || '';
-  $('p-bio').value      = p.bio      || '';
+  $('p-bio').value       = p.bio       || '';
+  $('p-about-bio') && ($('p-about-bio').value = p.about_bio || '');
   $('p-email').value    = p.email    || '';
   $('p-phone').value    = p.phone    || '';
   $('p-location').value = p.location || '';
@@ -202,7 +203,8 @@ $('savePersonalBtn').addEventListener('click', async () => {
   if (!id) { toast('No personal record found!', 'error'); return; }
   await sb.update('personal', id, {
     name: $('p-name').value, tagline: $('p-tagline').value,
-    bio: $('p-bio').value, email: $('p-email').value,
+    bio: $('p-bio').value,
+    about_bio: $('p-about-bio')?.value || '', email: $('p-email').value,
     phone: $('p-phone').value, location: $('p-location').value,
     years_of_experience: parseInt($('p-years').value)||0,
   });

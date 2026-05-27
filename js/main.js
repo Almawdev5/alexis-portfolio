@@ -203,14 +203,16 @@ function updatePersonalInfo(d) {
   const p = d.personal;
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
   set('heroName', p.name);
-  set('heroBio',  p.bio);
+  set('heroBio', p.bio);
   set('hcName',   p.name);
   set('hcRole',   p.tagline);
   set('hcLocation', p.location);
   set('hcEmail',  p.email);
   set('hcPhone',  p.phone);
   set('aboutYears', p.yearsOfExperience + '+');
-  set('aboutBio', p.bio);
+  // About bio — use full about bio (separate from hero bio)
+  const aboutBio = document.getElementById('aboutBio');
+  if (aboutBio) aboutBio.textContent = p.aboutBio || p.bio;
   set('statProjects', d.projects.filter(p=>p.live!=='#').length+'+');
   set('statSkills',   d.skills.reduce((a,s)=>a+s.items.length,0)+'+');
   set('statYears',    p.yearsOfExperience+'+');
@@ -327,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (page === 'about') {
       const bio = document.getElementById('aboutBio');
       const yr  = document.getElementById('aboutYears');
-      if (bio) bio.textContent = d.personal.bio;
+      if (bio) bio.textContent = d.personal.aboutBio || d.personal.bio;
       if (yr)  yr.textContent  = d.personal.yearsOfExperience + '+';
     }
 
