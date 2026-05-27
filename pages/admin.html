@@ -50,29 +50,15 @@
       <!-- Sidebar -->
       <div class="admin-sidebar">
         <div class="admin-sidebar-label">Overview</div>
-        <div class="admin-nav-item active" data-section="dashboard">
-          <i class="fas fa-th-large"></i> Dashboard
-        </div>
+        <div class="admin-nav-item active" data-section="dashboard"><i class="fas fa-th-large"></i> Dashboard</div>
         <div class="admin-sidebar-label">Content</div>
-        <div class="admin-nav-item" data-section="personal">
-          <i class="fas fa-user"></i> Personal Info
-        </div>
-        <div class="admin-nav-item" data-section="projects">
-          <i class="fas fa-rocket"></i> Projects
-        </div>
-        <div class="admin-nav-item" data-section="skills">
-          <i class="fas fa-code"></i> Skills
-        </div>
-        <div class="admin-nav-item" data-section="services">
-          <i class="fas fa-cogs"></i> Services
-        </div>
-        <div class="admin-nav-item" data-section="certificates">
-          <i class="fas fa-certificate"></i> Certificates
-        </div>
-        <div class="admin-sidebar-label">Settings</div>
-        <div class="admin-nav-item" data-section="reset">
-          <i class="fas fa-undo"></i> Reset Data
-        </div>
+        <div class="admin-nav-item" data-section="personal"><i class="fas fa-user"></i> Personal Info</div>
+        <div class="admin-nav-item" data-section="projects"><i class="fas fa-rocket"></i> Projects</div>
+        <div class="admin-nav-item" data-section="skills"><i class="fas fa-code"></i> Skills</div>
+        <div class="admin-nav-item" data-section="services"><i class="fas fa-cogs"></i> Services</div>
+        <div class="admin-nav-item" data-section="certificates"><i class="fas fa-certificate"></i> Certificates</div>
+        <div class="admin-sidebar-label">Inbox</div>
+        <div class="admin-nav-item" data-section="messages"><i class="fas fa-envelope"></i> Messages <span id="msgBadge" style="background:#ff5050;color:#fff;border-radius:100px;padding:1px 7px;font-size:.6rem;margin-left:4px;display:none">0</span></div>
       </div>
 
       <!-- Main -->
@@ -86,7 +72,9 @@
               <div class="admin-section-sub">Here's an overview of your portfolio content.</div>
             </div>
           </div>
-          <div class="admin-stats" id="dashStats"></div>
+          <div class="admin-stats" id="dashStats">
+            <div class="admin-stat-card"><div class="admin-stat-num">...</div><div class="admin-stat-lbl">Loading</div></div>
+          </div>
           <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px">
             <div style="font-family:var(--fm);font-size:.68rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">Quick Actions</div>
             <div style="display:flex;flex-wrap:wrap;gap:10px">
@@ -108,65 +96,33 @@
             <button class="admin-add-btn" id="savePersonalBtn"><i class="fas fa-save"></i> Save Changes</button>
           </div>
           <div style="background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:28px">
+            <input type="hidden" id="p-id" />
             <div class="admin-field-row">
-              <div class="admin-field">
-                <label class="admin-label">Full Name</label>
-                <input class="admin-input" id="p-name" type="text" />
-              </div>
-              <div class="admin-field">
-                <label class="admin-label">Tagline</label>
-                <input class="admin-input" id="p-tagline" type="text" />
-              </div>
+              <div class="admin-field"><label class="admin-label">Full Name</label><input class="admin-input" id="p-name" type="text" /></div>
+              <div class="admin-field"><label class="admin-label">Tagline</label><input class="admin-input" id="p-tagline" type="text" /></div>
             </div>
-            <div class="admin-field">
-              <label class="admin-label">Bio</label>
-              <textarea class="admin-textarea" id="p-bio" style="min-height:110px"></textarea>
+            <div class="admin-field"><label class="admin-label">Bio</label><textarea class="admin-textarea" id="p-bio" style="min-height:110px"></textarea></div>
+            <div class="admin-field-row">
+              <div class="admin-field"><label class="admin-label">Email</label><input class="admin-input" id="p-email" type="email" /></div>
+              <div class="admin-field"><label class="admin-label">Phone</label><input class="admin-input" id="p-phone" type="text" /></div>
             </div>
             <div class="admin-field-row">
-              <div class="admin-field">
-                <label class="admin-label">Email</label>
-                <input class="admin-input" id="p-email" type="email" />
-              </div>
-              <div class="admin-field">
-                <label class="admin-label">Phone</label>
-                <input class="admin-input" id="p-phone" type="text" />
-              </div>
-            </div>
-            <div class="admin-field-row">
-              <div class="admin-field">
-                <label class="admin-label">Location</label>
-                <input class="admin-input" id="p-location" type="text" />
-              </div>
-              <div class="admin-field">
-                <label class="admin-label">Years of Experience</label>
-                <input class="admin-input" id="p-years" type="number" />
-              </div>
+              <div class="admin-field"><label class="admin-label">Location</label><input class="admin-input" id="p-location" type="text" /></div>
+              <div class="admin-field"><label class="admin-label">Years of Experience</label><input class="admin-input" id="p-years" type="number" /></div>
             </div>
             <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin:20px 0 12px">Social Links</div>
             <div class="admin-field-row">
-              <div class="admin-field">
-                <label class="admin-label"><i class="fab fa-github"></i> GitHub URL</label>
-                <input class="admin-input" id="p-github" type="url" />
-              </div>
-              <div class="admin-field">
-                <label class="admin-label"><i class="fab fa-linkedin"></i> LinkedIn URL</label>
-                <input class="admin-input" id="p-linkedin" type="url" />
-              </div>
+              <div class="admin-field"><label class="admin-label"><i class="fab fa-github"></i> GitHub URL</label><input class="admin-input" id="p-github" type="url" /></div>
+              <div class="admin-field"><label class="admin-label"><i class="fab fa-linkedin"></i> LinkedIn URL</label><input class="admin-input" id="p-linkedin" type="url" /></div>
             </div>
-            <div class="admin-field">
-              <label class="admin-label"><i class="fab fa-telegram"></i> Telegram URL</label>
-              <input class="admin-input" id="p-telegram" type="url" />
-            </div>
+            <div class="admin-field"><label class="admin-label"><i class="fab fa-telegram"></i> Telegram URL</label><input class="admin-input" id="p-telegram" type="url" /></div>
           </div>
         </div>
 
         <!-- ── PROJECTS ── -->
         <div class="admin-section" id="sec-projects">
           <div class="admin-section-header">
-            <div>
-              <div class="admin-section-title">Projects</div>
-              <div class="admin-section-sub">Add, edit or remove your projects.</div>
-            </div>
+            <div><div class="admin-section-title">Projects</div><div class="admin-section-sub">Add, edit or remove your projects.</div></div>
             <button class="admin-add-btn" id="addProjectBtn"><i class="fas fa-plus"></i> Add Project</button>
           </div>
           <div class="admin-list" id="projectsList"></div>
@@ -175,10 +131,7 @@
         <!-- ── SKILLS ── -->
         <div class="admin-section" id="sec-skills">
           <div class="admin-section-header">
-            <div>
-              <div class="admin-section-title">Skills</div>
-              <div class="admin-section-sub">Manage your skill categories and items.</div>
-            </div>
+            <div><div class="admin-section-title">Skills</div><div class="admin-section-sub">Manage your skill categories and items.</div></div>
             <button class="admin-add-btn" id="addSkillCatBtn"><i class="fas fa-plus"></i> Add Category</button>
           </div>
           <div class="admin-list" id="skillsList"></div>
@@ -187,10 +140,7 @@
         <!-- ── SERVICES ── -->
         <div class="admin-section" id="sec-services">
           <div class="admin-section-header">
-            <div>
-              <div class="admin-section-title">Services</div>
-              <div class="admin-section-sub">Manage the services you offer.</div>
-            </div>
+            <div><div class="admin-section-title">Services</div><div class="admin-section-sub">Manage the services you offer.</div></div>
             <button class="admin-add-btn" id="addServiceBtn"><i class="fas fa-plus"></i> Add Service</button>
           </div>
           <div class="admin-list" id="servicesList"></div>
@@ -199,44 +149,26 @@
         <!-- ── CERTIFICATES ── -->
         <div class="admin-section" id="sec-certificates">
           <div class="admin-section-header">
-            <div>
-              <div class="admin-section-title">Certificates</div>
-              <div class="admin-section-sub">Add or remove your certificates.</div>
-            </div>
+            <div><div class="admin-section-title">Certificates</div><div class="admin-section-sub">Add or remove your certificates.</div></div>
             <button class="admin-add-btn" id="addCertBtn"><i class="fas fa-plus"></i> Add Certificate</button>
           </div>
           <div class="admin-list" id="certsList"></div>
         </div>
 
-        <!-- ── RESET ── -->
-        <div class="admin-section" id="sec-reset">
+      <!-- ── MESSAGES ── -->
+        <div class="admin-section" id="sec-messages">
           <div class="admin-section-header">
-            <div>
-              <div class="admin-section-title">Reset Data</div>
-              <div class="admin-section-sub">Clear all custom data and restore defaults from data.js</div>
-            </div>
+            <div><div class="admin-section-title">Messages <span id="unreadCount" style="font-size:.85rem;color:var(--accent)"></span></div><div class="admin-section-sub">Messages from your portfolio contact form.</div></div>
+            <button class="admin-add-btn" onclick="renderMessages()" style="background:var(--bg2);color:var(--accent);border:1px solid var(--accent-b)"><i class="fas fa-sync"></i> Refresh</button>
           </div>
-          <div style="background:var(--bg3);border:1px solid rgba(255,80,80,.2);border-radius:14px;padding:28px">
-            <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
-              <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);display:flex;align-items:center;justify-content:center;color:#ff5050;font-size:1.2rem;flex-shrink:0">
-                <i class="fas fa-exclamation-triangle"></i>
-              </div>
-              <div>
-                <div style="font-weight:700;margin-bottom:3px">Danger Zone</div>
-                <div style="font-size:.8rem;color:var(--text2)">This will delete all your custom edits and restore the original data.js content.</div>
-              </div>
-            </div>
-            <button onclick="resetAllData()" style="padding:11px 22px;background:rgba(255,80,80,.1);color:#ff5050;border:1px solid rgba(255,80,80,.3);border-radius:8px;font-family:var(--fm);font-size:.75rem;font-weight:700;cursor:pointer;transition:var(--tr)">
-              <i class="fas fa-trash"></i> &nbsp;Reset All Data
-            </button>
-          </div>
+          <div class="admin-list" id="messagesList"></div>
         </div>
 
       </div>
     </div>
   </div>
 
-  <!-- ── MODALS ──────────────────────────────────────────────── -->
+  <!-- ══ MODALS ═════════════════════════════════════════════ -->
 
   <!-- Project Modal -->
   <div class="admin-modal-overlay" id="projectModal">
@@ -245,46 +177,36 @@
         <span id="projectModalTitle">Add Project</span>
         <button class="admin-modal-close" onclick="closeModal('projectModal')"><i class="fas fa-times"></i></button>
       </div>
-      <div class="admin-field">
-        <label class="admin-label">Project Name</label>
-        <input class="admin-input" id="proj-name" type="text" placeholder="My Awesome Project" />
-      </div>
-      <div class="admin-field">
-        <label class="admin-label">Description</label>
-        <textarea class="admin-textarea" id="proj-desc" placeholder="What does this project do?"></textarea>
-      </div>
+      <div class="admin-field"><label class="admin-label">Project Name</label><input class="admin-input" id="proj-name" type="text" placeholder="My Awesome Project" /></div>
+      <div class="admin-field"><label class="admin-label">Short Description</label><textarea class="admin-textarea" id="proj-desc" placeholder="What does this project do?"></textarea></div>
+      <div class="admin-field"><label class="admin-label">Long Description (detail page)</label><textarea class="admin-textarea" id="proj-longdesc" placeholder="Full description for the detail page..."></textarea></div>
       <div class="admin-field-row">
-        <div class="admin-field">
-          <label class="admin-label">Live URL</label>
-          <input class="admin-input" id="proj-live" type="url" placeholder="https://..." />
+        <div class="admin-field"><label class="admin-label">Live URL</label><input class="admin-input" id="proj-live" type="url" placeholder="https://..." /></div>
+        <div class="admin-field"><label class="admin-label">GitHub URL</label><input class="admin-input" id="proj-github" type="url" placeholder="https://github.com/..." /></div>
+      </div>
+      <div class="admin-field"><label class="admin-label">Tech Stack (comma separated)</label><input class="admin-input" id="proj-tech" type="text" placeholder="React, Node.js, Supabase" /></div>
+
+      <!-- Image Upload -->
+      <div class="admin-field">
+        <label class="admin-label">Project Images</label>
+        <div class="img-upload-area" id="projUploadArea">
+          <i class="fas fa-cloud-upload-alt" style="font-size:2rem;color:var(--accent);margin-bottom:10px"></i>
+          <div style="font-size:.85rem;color:var(--text2);margin-bottom:6px">Click or drag images here</div>
+          <div style="font-size:.72rem;color:var(--text3)">PNG, JPG, WEBP — multiple allowed</div>
+          <input type="file" id="proj-images-input" accept="image/*" multiple style="display:none" />
         </div>
-        <div class="admin-field">
-          <label class="admin-label">GitHub URL</label>
-          <input class="admin-input" id="proj-github" type="url" placeholder="https://github.com/..." />
+        <div id="projImgPreviews" class="img-previews"></div>
+        <div id="projUploadProgress" style="display:none;margin-top:8px">
+          <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="projProgressBar" style="height:100%;background:var(--accent);width:0%;transition:width .3s"></div>
+          </div>
+          <div id="projProgressText" style="font-family:var(--fm);font-size:.65rem;color:var(--text2);margin-top:5px">Uploading...</div>
         </div>
       </div>
-      <div class="admin-field">
-        <label class="admin-label">Tech Stack (comma separated)</label>
-        <input class="admin-input" id="proj-tech" type="text" placeholder="React, Node.js, Supabase" />
-      </div>
-      <div class="admin-field">
-        <label class="admin-label">Image path (main image)</label>
-        <input class="admin-input" id="proj-image" type="text" placeholder="assets/img/project.png" />
-      </div>
-      <div class="admin-field">
-        <label class="admin-label">Additional Images (comma separated paths)</label>
-        <input class="admin-input" id="proj-images" type="text" placeholder="assets/img/p1.png, assets/img/p2.png" />
-      </div>
-      <div class="admin-field">
-        <label class="admin-label">Long Description (for detail page)</label>
-        <textarea class="admin-textarea" id="proj-longdesc" placeholder="Detailed description shown on the project detail page..."></textarea>
-      </div>
+
       <div class="admin-field">
         <label class="admin-label">Featured Project?</label>
-        <select class="admin-select" id="proj-featured">
-          <option value="false">No</option>
-          <option value="true">Yes ⭐</option>
-        </select>
+        <select class="admin-select" id="proj-featured"><option value="false">No</option><option value="true">Yes ⭐</option></select>
       </div>
       <div class="admin-modal-actions">
         <button class="admin-cancel-btn" onclick="closeModal('projectModal')">Cancel</button>
@@ -293,7 +215,7 @@
     </div>
   </div>
 
-  <!-- Skill Category Modal -->
+  <!-- Skill Modal -->
   <div class="admin-modal-overlay" id="skillModal">
     <div class="admin-modal">
       <div class="admin-modal-title">
@@ -301,19 +223,10 @@
         <button class="admin-modal-close" onclick="closeModal('skillModal')"><i class="fas fa-times"></i></button>
       </div>
       <div class="admin-field-row">
-        <div class="admin-field">
-          <label class="admin-label">Category Name</label>
-          <input class="admin-input" id="skill-cat" type="text" placeholder="e.g. Frontend" />
-        </div>
-        <div class="admin-field">
-          <label class="admin-label">Icon class (Font Awesome)</label>
-          <input class="admin-input" id="skill-icon" type="text" placeholder="fas fa-desktop" />
-        </div>
+        <div class="admin-field"><label class="admin-label">Category Name</label><input class="admin-input" id="skill-cat" type="text" placeholder="e.g. Frontend" /></div>
+        <div class="admin-field"><label class="admin-label">Icon (Font Awesome class)</label><input class="admin-input" id="skill-icon" type="text" placeholder="fas fa-desktop" /></div>
       </div>
-      <div class="admin-field">
-        <label class="admin-label">Skills (comma separated)</label>
-        <input class="admin-input" id="skill-items" type="text" placeholder="React, Vue, Next.js" />
-      </div>
+      <div class="admin-field"><label class="admin-label">Skills (comma separated)</label><input class="admin-input" id="skill-items" type="text" placeholder="React, Vue, Next.js" /></div>
       <div class="admin-modal-actions">
         <button class="admin-cancel-btn" onclick="closeModal('skillModal')">Cancel</button>
         <button class="admin-save-btn" id="saveSkillBtn"><i class="fas fa-save"></i> Save Category</button>
@@ -329,19 +242,10 @@
         <button class="admin-modal-close" onclick="closeModal('serviceModal')"><i class="fas fa-times"></i></button>
       </div>
       <div class="admin-field-row">
-        <div class="admin-field">
-          <label class="admin-label">Service Title</label>
-          <input class="admin-input" id="svc-title" type="text" placeholder="Web Development" />
-        </div>
-        <div class="admin-field">
-          <label class="admin-label">Icon class (Font Awesome)</label>
-          <input class="admin-input" id="svc-icon" type="text" placeholder="fas fa-code" />
-        </div>
+        <div class="admin-field"><label class="admin-label">Service Title</label><input class="admin-input" id="svc-title" type="text" placeholder="Web Development" /></div>
+        <div class="admin-field"><label class="admin-label">Icon (Font Awesome class)</label><input class="admin-input" id="svc-icon" type="text" placeholder="fas fa-code" /></div>
       </div>
-      <div class="admin-field">
-        <label class="admin-label">Description</label>
-        <textarea class="admin-textarea" id="svc-desc" placeholder="Describe what this service includes..."></textarea>
-      </div>
+      <div class="admin-field"><label class="admin-label">Description</label><textarea class="admin-textarea" id="svc-desc" placeholder="Describe what this service includes..."></textarea></div>
       <div class="admin-modal-actions">
         <button class="admin-cancel-btn" onclick="closeModal('serviceModal')">Cancel</button>
         <button class="admin-save-btn" id="saveServiceBtn"><i class="fas fa-save"></i> Save Service</button>
@@ -357,29 +261,32 @@
         <button class="admin-modal-close" onclick="closeModal('certModal')"><i class="fas fa-times"></i></button>
       </div>
       <div class="admin-field-row">
-        <div class="admin-field">
-          <label class="admin-label">Certificate Title</label>
-          <input class="admin-input" id="cert-title" type="text" placeholder="AWS Certified Developer" />
-        </div>
-        <div class="admin-field">
-          <label class="admin-label">Issuing Organization</label>
-          <input class="admin-input" id="cert-issuer" type="text" placeholder="Amazon Web Services" />
-        </div>
+        <div class="admin-field"><label class="admin-label">Certificate Title</label><input class="admin-input" id="cert-title" type="text" placeholder="AWS Certified Developer" /></div>
+        <div class="admin-field"><label class="admin-label">Issuing Organization</label><input class="admin-input" id="cert-issuer" type="text" placeholder="Amazon Web Services" /></div>
       </div>
       <div class="admin-field-row">
-        <div class="admin-field">
-          <label class="admin-label">Year</label>
-          <input class="admin-input" id="cert-year" type="text" placeholder="2025" />
-        </div>
-        <div class="admin-field">
-          <label class="admin-label">Image path</label>
-          <input class="admin-input" id="cert-image" type="text" placeholder="assets/img/cert.png" />
-        </div>
+        <div class="admin-field"><label class="admin-label">Year</label><input class="admin-input" id="cert-year" type="text" placeholder="2025" /></div>
       </div>
+
+      <!-- Certificate Image Upload -->
       <div class="admin-field">
-        <label class="admin-label">Description</label>
-        <textarea class="admin-textarea" id="cert-desc" placeholder="What does this certificate cover?"></textarea>
+        <label class="admin-label">Certificate Image</label>
+        <div class="img-upload-area" id="certUploadArea">
+          <i class="fas fa-certificate" style="font-size:2rem;color:var(--accent);margin-bottom:10px"></i>
+          <div style="font-size:.85rem;color:var(--text2);margin-bottom:6px">Click to upload certificate image</div>
+          <div style="font-size:.72rem;color:var(--text3)">PNG, JPG — clear photo of your certificate</div>
+          <input type="file" id="cert-image-input" accept="image/*" style="display:none" />
+        </div>
+        <div id="certImgPreview" class="img-previews"></div>
+        <div id="certUploadProgress" style="display:none;margin-top:8px">
+          <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="certProgressBar" style="height:100%;background:var(--accent);width:0%;transition:width .3s"></div>
+          </div>
+          <div id="certProgressText" style="font-family:var(--fm);font-size:.65rem;color:var(--text2);margin-top:5px">Uploading...</div>
+        </div>
       </div>
+
+      <div class="admin-field"><label class="admin-label">Description</label><textarea class="admin-textarea" id="cert-desc" placeholder="What does this certificate cover?"></textarea></div>
       <div class="admin-modal-actions">
         <button class="admin-cancel-btn" onclick="closeModal('certModal')">Cancel</button>
         <button class="admin-save-btn" id="saveCertBtn"><i class="fas fa-save"></i> Save Certificate</button>
@@ -390,7 +297,50 @@
   <!-- Toast -->
   <div class="admin-toast" id="adminToast"></div>
 
+  <!-- Image upload styles -->
+  <style>
+    .img-upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--tr);
+      background: var(--bg2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .img-upload-area:hover, .img-upload-area.drag { border-color: var(--accent); background: var(--accent-d) }
+    .img-previews { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px }
+    .img-preview-item {
+      position: relative;
+      width: 80px; height: 64px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .img-preview-item img { width: 100%; height: 100%; object-fit: cover; display: block }
+    .img-preview-remove {
+      position: absolute;
+      top: 3px; right: 3px;
+      width: 18px; height: 18px;
+      background: rgba(255,80,80,.9);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .55rem; color: #fff;
+      cursor: pointer;
+    }
+    .img-preview-item.uploading::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+    }
+  </style>
+
   <script src="../js/data.js"></script>
+  <script src="../js/supabase.js"></script>
   <script src="../js/admin.js"></script>
 </body>
 </html>
