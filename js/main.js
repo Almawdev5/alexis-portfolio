@@ -89,7 +89,8 @@ function renderProjects(gridId, imgPrefix, d) {
       </div>`;
     card.addEventListener('click', () => {
       const detail = imgPrefix===''?'pages/project-detail.html':'project-detail.html';
-      window.location.href = `${detail}?id=${i}`;
+      const idParam = p.id || i;
+      window.location.href = `${detail}?id=${idParam}`;
     });
     grid.appendChild(card);
     observer.observe(card);
@@ -140,7 +141,8 @@ function renderCerts(gridId, imgPrefix, d) {
       </div>`;
     card.addEventListener('click', () => {
       const detail = imgPrefix===''?'pages/certificate-detail.html':'certificate-detail.html';
-      window.location.href = `${detail}?id=${i}`;
+      const idParam = c.id || i;
+      window.location.href = `${detail}?id=${idParam}`;
     });
     grid.appendChild(card);
     observer.observe(card);
@@ -275,19 +277,106 @@ document.addEventListener('DOMContentLoaded', () => {
   backTop?.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
 
   // ── TYPING EFFECT ─────────────────────────────────────────
-  const typingEl = document.getElementById('typingText');
-  if (typingEl) {
-    const texts = ['Full-Stack Developer','AI Enthusiast','Problem Solver','Open Source Contributor'];
-    let ti=0, ci=0, deleting=false;
-    const type = () => {
-      const cur = texts[ti];
-      typingEl.textContent = deleting ? cur.slice(0,ci--) : cur.slice(0,ci++);
-      let delay = deleting ? 60 : 100;
-      if (!deleting && ci > cur.length)  { delay=1800; deleting=true; }
-      if (deleting  && ci < 0)          { deleting=false; ti=(ti+1)%texts.length; delay=400; }
-      setTimeout(type, delay);
-    };
-    type();
+  // ── FUTURISTIC TYPING ANIMATION ──────────────────────────
+  const typedContainer = document.getElementById('typedContainer');
+  const typingCursor   = document.getElementById('typingCursor');
+  const typingProgress = document.getElementById('typingProgress');
+  const roleIndicators = document.getElementById('roleIndicators');
+
+  if (typedContainer) {
+    const roles = [
+      { text: 'Full-Stack Developer',   color: '#00f5a0', shadow: 'rgba(0,245,160,.4)'   },
+      { text: 'AI Enthusiast',          color: '#00c8ff', shadow: 'rgba(0,200,255,.4)'   },
+      { text: 'Problem Solver',         color: '#a78bfa', shadow: 'rgba(167,139,250,.4)' },
+      { text: 'Open Source Builder',    color: '#f472b6', shadow: 'rgba(244,114,182,.4)' },
+    ];
+
+    let ri = 0, chars = [], deleting = false, charIdx = 0, progressTimer = null;
+
+    // Create indicators
+    if (roleIndicators) {
+      roles.forEach((r, i) => {
+        const d = document.createElement('div');
+        d.style.cssText = `width:6px;height:6px;border-radius:50%;background:${i===0?r.color:'rgba(255,255,255,.1)'};transition:all .4s;${i===0?`box-shadow:0 0 8px ${r.shadow}`:''}`;
+        roleIndicators.appendChild(d);
+      });
+    }
+
+    function setRole(i) {
+      const r = roles[i];
+      if (typingCursor) {
+        typingCursor.style.background   = r.color;
+        typingCursor.style.boxShadow    = `0 0 10px ${r.shadow}, 0 0 20px ${r.shadow}`;
+      }
+      if (typingProgress) {
+        typingProgress.style.background = `linear-gradient(90deg,${r.color},${roles[(i+1)%roles.length].color})`;
+      }
+      if (roleIndicators) {
+        roleIndicators.querySelectorAll('div').forEach((d,j) => {
+          d.style.background  = j===i ? roles[j].color : 'rgba(255,255,255,.1)';
+          d.style.transform   = j===i ? 'scale(1.5)' : 'scale(1)';
+          d.style.boxShadow   = j===i ? `0 0 8px ${roles[j].shadow}` : 'none';
+        });
+      }
+    }
+
+    function startProgress(dur) {
+      clearInterval(progressTimer);
+      let v = 0;
+      if (typingProgress) typingProgress.style.width = '0%';
+      const step = 100 / (dur / 50);
+      progressTimer = setInterval(() => {
+        v = Math.min(100, v + step);
+        if (typingProgress) typingProgress.style.width = v + '%';
+        if (v >= 100) clearInterval(progressTimer);
+      }, 50);
+    }
+
+    function addChar(ch, color, shadow) {
+      const span = document.createElement('span');
+      span.textContent = ch === ' ' ? ' ' : ch;
+      span.style.cssText = `display:inline-block;color:${color};text-shadow:0 0 12px ${shadow};opacity:0;transform:translateY(8px) skewX(-4deg);transition:all .12s cubic-bezier(.4,0,.2,1)`;
+      typedContainer.appendChild(span);
+      chars.push(span);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        span.style.opacity   = '1';
+        span.style.transform = 'translateY(0) skewX(0)';
+      }));
+    }
+
+    function removeLastChar() {
+      if (!chars.length) return;
+      const last = chars[chars.length - 1];
+      last.style.opacity   = '0';
+      last.style.transform = 'translateY(-6px) skewX(4deg) scale(.8)';
+      setTimeout(() => { last.remove(); chars.pop(); }, 110);
+    }
+
+    setRole(0);
+
+    function type() {
+      const role = roles[ri];
+      const text = role.text;
+      if (!deleting && charIdx <= text.length) {
+        if (charIdx < text.length) addChar(text[charIdx], role.color, role.shadow);
+        charIdx++;
+        if (charIdx > text.length) {
+          startProgress(2200);
+          setTimeout(() => { deleting = true; type(); }, 2400);
+          return;
+        }
+        setTimeout(type, 65 + Math.random() * 35);
+      } else if (deleting && chars.length > 0) {
+        removeLastChar();
+        setTimeout(type, 38);
+      } else if (deleting && chars.length === 0) {
+        deleting = false; charIdx = 0;
+        ri = (ri + 1) % roles.length;
+        setRole(ri);
+        setTimeout(type, 400);
+      }
+    }
+    setTimeout(type, 600);
   }
 
   // ── SCROLLSPY ─────────────────────────────────────────────

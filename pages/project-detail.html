@@ -140,6 +140,7 @@
   <button class="back-top" id="backTop"><i class="fas fa-arrow-up"></i></button>
 
   <script src="../js/data.js"></script>
+  <script src="../js/supabase.js"></script>
   <script>
     // Theme
     document.getElementById('themeToggle')?.addEventListener('click', () => {
@@ -162,13 +163,17 @@
     });
 
     // Load data
-    const saved = localStorage.getItem('alexPortfolioData');
-    const data  = saved ? JSON.parse(saved) : portfolioData;
-    const idx   = parseInt(new URLSearchParams(window.location.search).get('id'));
-    const proj  = data.projects[idx];
+    ;(async () => {
+    const data = await loadPortfolioFromDB();
+    const params = new URLSearchParams(window.location.search);
+    const idParam  = params.get('id');
+    const idx      = parseInt(idParam);
+    // Try by Supabase ID first, then by index
+    const proj = data.projects.find(p => p.id === idParam) || data.projects[idx];
+    const projIdx  = data.projects.findIndex(p => p.id === idParam || data.projects.indexOf(p) === idx);
     const el    = document.getElementById('pdContent');
 
-    if (!proj || isNaN(idx)) {
+    if (!proj) {
       el.innerHTML = `
         <div class="pd-not-found">
           <i class="fas fa-rocket"></i>
@@ -178,7 +183,12 @@
         </div>`;
     } else {
       const isDemo   = proj.live === '#' && proj.github === '#';
-      const images   = proj.images && proj.images.length ? proj.images : [proj.image];
+      // Handle both Supabase URLs and local paths
+      const rawImages = proj.images && proj.images.length ? proj.images : [proj.image];
+      const images    = rawImages.filter(Boolean).map(img =>
+        img.startsWith('http') ? img : `../assets/img/${img.split('/').pop().replace(/ /g,'%20')}`
+      );
+      if (!images.length) images.push('../assets/img/project-demo.png');
       let activeImg  = 0;
 
       document.title = `${proj.name} — Alex'sDev`;
@@ -204,7 +214,7 @@
         <div class="pd-thumbs" id="pdThumbs">
           ${images.map((img, i) => `
             <div class="pd-thumb ${i===0?'active':''}" data-idx="${i}">
-              <img src="../${img}" alt="Screenshot ${i+1}"
+              <img src="${img.startsWith('http') ? img : '../assets/img/' + img.split('/').pop()}" alt="Screenshot ${i+1}"
                 onerror="this.parentElement.style.display='none'">
             </div>`).join('')}
         </div>
@@ -264,8 +274,8 @@
 
                   <!-- Prev / Next -->
                   <div style="display:flex;gap:10px">
-                    ${idx > 0 ? `<a href="project-detail.html?id=${idx-1}" class="btn btn-outline" style="flex:1;justify-content:center;font-size:.72rem"><i class="fas fa-chevron-left"></i> Previous</a>` : ''}
-                    ${idx < data.projects.length-1 ? `<a href="project-detail.html?id=${idx+1}" class="btn btn-outline" style="flex:1;justify-content:center;font-size:.72rem">Next <i class="fas fa-chevron-right"></i></a>` : ''}
+                    ${projIdx > 0 ? `<a href="project-detail.html?id=${projIdx-1}" class="btn btn-outline" style="flex:1;justify-content:center;font-size:.72rem"><i class="fas fa-chevron-left"></i> Previous</a>` : ''}
+                    ${projIdx < data.projects.length-1 ? `<a href="project-detail.html?id=${projIdx+1}" class="btn btn-outline" style="flex:1;justify-content:center;font-size:.72rem">Next <i class="fas fa-chevron-right"></i></a>` : ''}
                   </div>
                 </div>
 
@@ -294,7 +304,7 @@
       // ── Lightbox ──
       const lightbox = document.getElementById('pdLightbox');
       const lbImg    = document.getElementById('lbImg');
-      const open  = (i) => { activeImg=i; lbImg.src=`../${images[i]}`; lightbox.classList.add('open'); document.body.style.overflow='hidden'; };
+      const open  = (i) => { activeImg=i; lbImg.src=images[i]; lightbox.classList.add('open'); document.body.style.overflow='hidden'; };
       const close = () => { lightbox.classList.remove('open'); document.body.style.overflow=''; };
 
       mainWrap?.addEventListener('click', () => open(activeImg));
@@ -315,6 +325,7 @@
       }, {threshold:.1});
       document.querySelectorAll('.reveal-left,.reveal-right').forEach(el => obs.observe(el));
     }
+    })();
   </script>
 </body>
 </html>
