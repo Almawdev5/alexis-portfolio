@@ -24,6 +24,19 @@ function openModal(id)  { $(id).classList.add('open') }
 function closeModal(id) { $(id).classList.remove('open') }
 window.closeModal = closeModal;
 
+// Remove image preview and from URLs array
+window.removeImgPreview = function(btn) {
+  const item = btn.parentElement;
+  const url  = item.dataset.url;
+  projUploadedUrls = projUploadedUrls.filter(u => u !== url);
+  item.remove();
+};
+
+window.removeCertImgPreview = function() {
+  certUploadedUrl = '';
+  $('certImgPreview').innerHTML = '';
+};
+
 function openSection(name) {
   document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.admin-nav-item').forEach(n => n.classList.remove('active'));
@@ -72,21 +85,24 @@ function imgSrc(image) {
 
 // ── IMAGE UPLOAD ──────────────────────────────────────────────
 async function uploadImage(file, folder='projects') {
-  const ext  = file.name.split('.').pop().toLowerCase();
-  const name = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const res  = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${name}`, {
+  const ext      = file.name.split('.').pop().toLowerCase();
+  const mimeMap  = { jpg:'image/jpeg', jpeg:'image/jpeg', png:'image/png', webp:'image/webp', gif:'image/gif' };
+  const mimeType = file.type || mimeMap[ext] || 'image/jpeg';
+  const name     = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${name}`, {
     method: 'POST',
     headers: {
       'apikey':        SUPABASE_ANON,
       'Authorization': `Bearer ${SUPABASE_ANON}`,
-      'Content-Type':  file.type,
+      'Content-Type':  mimeType,
       'x-upsert':      'true',
     },
     body: file,
   });
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Upload failed: ${err}`);
+    console.error('Upload error:', err);
+    throw new Error(`Upload failed: ${res.status}`);
   }
   return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${name}`;
 }
@@ -270,14 +286,15 @@ window.editProject = async function(id) {
   // Show existing images
   const previews = $('projImgPreviews');
   const existingImgs = p.images || (p.image ? [p.image] : []);
-  existingImgs.forEach(img => {
+  existingImgs.forEach((img, i) => {
     if (!img) return;
     const src  = imgSrc(img);
     const item = document.createElement('div');
     item.className = 'img-preview-item';
-    item.innerHTML = `<img src="${src}" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><rect width=\'64\' height=\'48\' fill=\'%23111\'/></svg>'"><div class="img-preview-remove" onclick="this.parentElement.remove()">✕</div>`;
+    item.dataset.url = img;
+    item.innerHTML = `<img src="${src}" onerror="this.style.opacity='.3'"><div class="img-preview-remove" onclick="removeImgPreview(this)">✕</div>`;
     previews.appendChild(item);
-    projUploadedUrls.push(img); // keep existing
+    projUploadedUrls.push(img);
   });
 
   openModal('projectModal');
