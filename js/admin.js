@@ -160,6 +160,82 @@ function setupUpload(areaId, inputId, previewId, progressId, barId, textId, mult
 // Track uploaded URLs per modal
 let projUploadedUrls = [];
 let certUploadedUrl  = '';
+let currentResumeUrl = '';
+
+function setResumeUI() {
+  const info = $('resumeInfo');
+  const link = $('resumeDownloadLink');
+  const del  = $('deleteResumeBtn');
+  if (!info || !link || !del) return;
+
+  if (currentResumeUrl) {
+    const fileName = currentResumeUrl.split('/').pop().split('?')[0];
+    info.textContent = `Current resume: ${fileName}`;
+    link.href = currentResumeUrl;
+    link.style.display = 'inline-flex';
+    del.style.display = 'inline-flex';
+  } else {
+    info.textContent = 'No resume uploaded.';
+    link.style.display = 'none';
+    del.style.display = 'none';
+  }
+}
+
+function resumeObjectPath(url) {
+  if (!url) return null;
+  try {
+    const prefix = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/`;
+    if (url.startsWith(prefix)) return decodeURIComponent(url.slice(prefix.length));
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+async function deleteResumeObject(url) {
+  const path = resumeObjectPath(url);
+  if (!path) return false;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${encodeURI(path)}`, {
+      method: 'DELETE',
+      headers: {
+        'apikey':        SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`,
+      },
+    });
+    return res.ok;
+  } catch (err) {
+    console.error('Resume delete error:', err);
+    return false;
+  }
+}
+
+async function uploadResumeFile(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  const mimeMap = {
+    pdf: 'application/pdf',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  };
+  const mimeType = mimeMap[ext] || file.type || 'application/octet-stream';
+  const name = `resume/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${name}`, {
+    method: 'POST',
+    headers: {
+      'apikey':        SUPABASE_ANON,
+      'Authorization': `Bearer ${SUPABASE_ANON}`,
+      'Content-Type':  mimeType,
+      'x-upsert':      'true',
+    },
+    body: file,
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('Upload resume error:', err);
+    throw new Error(`Upload failed: ${res.status}`);
+  }
+  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${name}`;
+}
 
 function initUploads() {
   setupUpload('projUploadArea','proj-images-input','projImgPreviews',
@@ -168,6 +244,47 @@ function initUploads() {
   setupUpload('certUploadArea','cert-image-input','certImgPreview',
     'certUploadProgress','certProgressBar','certProgressText', false,
     urls => { certUploadedUrl = urls[0]||''; });
+
+  const uploadBtn = $('resumeUploadBtn');
+  const fileInput = $('resumeFileInput');
+  const deleteBtn = $('deleteResumeBtn');
+  const progress  = $('resumeUploadProgress');
+
+  uploadBtn?.addEventListener('click', () => fileInput?.click());
+  fileInput?.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    if (!['pdf','doc','docx'].includes(file.name.split('.').pop().toLowerCase())) {
+      toast('Please upload a PDF or Word document.', 'error');
+      fileInput.value = '';
+      return;
+    }
+    progress.style.display = 'block';
+    progress.textContent = 'Uploading resume...';
+    try {
+      const url = await uploadResumeFile(file);
+      currentResumeUrl = url;
+      await sb.update('personal', $('p-id').value, { resume: url });
+      setResumeUI();
+      toast('Resume uploaded successfully! ✅');
+    } catch (err) {
+      toast(err.message || 'Resume upload failed.', 'error');
+    } finally {
+      progress.style.display = 'none';
+      fileInput.value = '';
+    }
+  });
+
+  deleteBtn?.addEventListener('click', async () => {
+    if (!confirm('Delete current resume/CV from your profile?')) return;
+    const url = currentResumeUrl;
+    let deletedFromStorage = false;
+    if (url) deletedFromStorage = await deleteResumeObject(url);
+    currentResumeUrl = '';
+    await sb.update('personal', $('p-id').value, { resume: '' });
+    setResumeUI();
+    toast(deletedFromStorage ? 'Resume deleted successfully! ✅' : 'Resume removed from profile.');
+  });
 }
 document.addEventListener('DOMContentLoaded', initUploads);
 
@@ -208,6 +325,8 @@ async function renderPersonal() {
   $('p-phone').value    = p.phone    || '';
   $('p-location').value = p.location || '';
   $('p-years').value    = p.years_of_experience || '';
+  currentResumeUrl      = p.resume || '';
+  setResumeUI();
   const socials = await sb.get('social');
   $('p-github').value   = socials.find(s=>s.name==='GitHub')?.url   || '';
   $('p-linkedin').value = socials.find(s=>s.name==='LinkedIn')?.url || '';
@@ -220,6 +339,7 @@ $('savePersonalBtn').addEventListener('click', async () => {
   await sb.update('personal', id, {
     name: $('p-name').value, tagline: $('p-tagline').value,
     bio: $('p-bio').value,
+    resume: currentResumeUrl,
     about_bio: $('p-about-bio')?.value || '', email: $('p-email').value,
     phone: $('p-phone').value, location: $('p-location').value,
     years_of_experience: parseInt($('p-years').value)||0,

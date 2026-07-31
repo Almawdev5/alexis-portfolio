@@ -224,6 +224,16 @@ function updatePersonalInfo(d) {
     `<a href="${s.url}" target="_blank" class="soc-btn" title="${s.name}"><i class="${s.icon}"></i></a>`
   ).join('');
 
+  const resumeLink = document.getElementById('resumeLink');
+  if (resumeLink) {
+    if (p.resume) {
+      resumeLink.href = p.resume;
+      resumeLink.style.display = 'inline-flex';
+    } else {
+      resumeLink.style.display = 'none';
+    }
+  }
+
   const contactItems = document.getElementById('contactItems');
   if (contactItems) contactItems.innerHTML = `
     <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-envelope"></i></div><div><div class="contact-item-label">Email</div><div class="contact-item-val">${p.email}</div></div></div>
@@ -348,6 +358,16 @@ function init() {
       const yr  = document.getElementById('aboutYears');
       if (bio) bio.textContent = d.personal.aboutBio || d.personal.bio;
       if (yr)  yr.textContent  = d.personal.yearsOfExperience + '+';
+
+      const resumeLink = document.getElementById('resumeLink');
+      if (resumeLink) {
+        if (d.personal.resume) {
+          resumeLink.href = d.personal.resume;
+          resumeLink.style.display = 'inline-flex';
+        } else {
+          resumeLink.style.display = 'none';
+        }
+      }
     }
 
     observeAll();

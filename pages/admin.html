@@ -117,6 +117,23 @@
               <div class="admin-field"><label class="admin-label">Location</label><input class="admin-input" id="p-location" type="text" /></div>
               <div class="admin-field"><label class="admin-label">Years of Experience</label><input class="admin-input" id="p-years" type="number" /></div>
             </div>
+            <div class="admin-field">
+              <label class="admin-label">Resume / CV</label>
+              <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">
+                <div style="flex:1;min-width:240px">
+                  <div id="resumeInfo" style="font-size:.85rem;color:var(--text2);margin-bottom:8px">No resume uploaded.</div>
+                  <a id="resumeDownloadLink" class="admin-add-btn" style="display:none;padding:.75rem 1rem;align-items:center;gap:8px;text-decoration:none" download>
+                    <i class="fas fa-download"></i> Download current CV
+                  </a>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:10px">
+                  <button type="button" class="admin-add-btn" id="resumeUploadBtn"><i class="fas fa-upload"></i> Upload/Replace CV</button>
+                  <button type="button" class="admin-btn-del" id="deleteResumeBtn" style="display:none"><i class="fas fa-trash"></i> Delete CV</button>
+                </div>
+              </div>
+              <input type="file" id="resumeFileInput" accept=".pdf,.doc,.docx" style="display:none" />
+              <div id="resumeUploadProgress" style="display:none;margin-top:8px;font-family:var(--fm);font-size:.75rem;color:var(--text2)"></div>
+            </div>
             <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin:20px 0 12px">Social Links</div>
             <div class="admin-field-row">
               <div class="admin-field"><label class="admin-label"><i class="fab fa-github"></i> GitHub URL</label><input class="admin-input" id="p-github" type="url" /></div>
