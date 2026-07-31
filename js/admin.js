@@ -678,11 +678,11 @@ async function renderCV() {
   const newInput = newArea.querySelector('#cv-file-input') || input;
   area.parentNode.replaceChild(newArea, area);
 
-  newArea.addEventListener('click', () => input.click());
+  newArea.addEventListener('click', () => newInput.click());
   newArea.addEventListener('dragover', e => { e.preventDefault(); newArea.style.borderColor = 'var(--accent)'; });
   newArea.addEventListener('dragleave', () => { newArea.style.borderColor = 'rgba(255,80,80,.3)'; });
   newArea.addEventListener('drop', e => { e.preventDefault(); handleCvUpload(e.dataTransfer.files[0]); });
-  input.addEventListener('change', () => handleCvUpload(input.files[0]));
+  newInput.addEventListener('change', () => handleCvUpload(newInput.files[0]));
 
   async function handleCvUpload(file) {
     if (!file) return;
@@ -794,18 +794,20 @@ function initCVUpload() {
       text.textContent = '✅ CV uploaded successfully!';
 
       // Show current file
-      current.innerHTML = `
-        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--accent-b);border-radius:8px;padding:12px 16px">
-          <i class="fas fa-file-pdf" style="color:var(--accent);font-size:1.2rem"></i>
-          <div style="flex:1">
-            <div style="font-size:.82rem;font-weight:700">${file.name}</div>
-            <div style="font-family:var(--fm);font-size:.65rem;color:var(--text2)">${(file.size/1024).toFixed(0)} KB</div>
-          </div>
-          <a href="${url}" target="_blank" class="admin-btn-edit" style="width:auto;padding:0 12px;font-size:.72rem;display:flex;align-items:center;gap:6px">
-            <i class="fas fa-eye"></i> Preview
-          </a>
-          <button onclick="removeCVUpload()" class="admin-btn-del"><i class="fas fa-trash"></i></button>
-        </div>`;
+      if (current) {
+        current.innerHTML = `
+          <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--accent-b);border-radius:8px;padding:12px 16px">
+            <i class="fas fa-file-pdf" style="color:var(--accent);font-size:1.2rem"></i>
+            <div style="flex:1">
+              <div style="font-size:.82rem;font-weight:700">${file.name}</div>
+              <div style="font-family:var(--fm);font-size:.65rem;color:var(--text2)">${(file.size/1024).toFixed(0)} KB</div>
+            </div>
+            <a href="${url}" target="_blank" class="admin-btn-edit" style="width:auto;padding:0 12px;font-size:.72rem;display:flex;align-items:center;gap:6px">
+              <i class="fas fa-eye"></i> Preview
+            </a>
+            <button onclick="removeCVUpload()" class="admin-btn-del"><i class="fas fa-trash"></i></button>
+          </div>`;
+      }
 
       // Auto-save CV URL to personal record
       const pid = $('p-id').value;
