@@ -57,6 +57,8 @@
         <div class="admin-nav-item" data-section="skills"><i class="fas fa-code"></i> Skills</div>
         <div class="admin-nav-item" data-section="services"><i class="fas fa-cogs"></i> Services</div>
         <div class="admin-nav-item" data-section="certificates"><i class="fas fa-certificate"></i> Certificates</div>
+        <div class="admin-sidebar-label">Files</div>
+        <div class="admin-nav-item" data-section="cv"><i class="fas fa-file-pdf"></i> CV / Resume</div>
         <div class="admin-sidebar-label">Inbox</div>
         <div class="admin-nav-item" data-section="messages"><i class="fas fa-envelope"></i> Messages <span id="msgBadge" style="background:#ff5050;color:#fff;border-radius:100px;padding:1px 7px;font-size:.6rem;margin-left:4px;display:none">0</span></div>
       </div>
@@ -117,29 +119,31 @@
               <div class="admin-field"><label class="admin-label">Location</label><input class="admin-input" id="p-location" type="text" /></div>
               <div class="admin-field"><label class="admin-label">Years of Experience</label><input class="admin-input" id="p-years" type="number" /></div>
             </div>
-            <div class="admin-field">
-              <label class="admin-label">Resume / CV</label>
-              <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">
-                <div style="flex:1;min-width:240px">
-                  <div id="resumeInfo" style="font-size:.85rem;color:var(--text2);margin-bottom:8px">No resume uploaded.</div>
-                  <a id="resumeDownloadLink" class="admin-add-btn" style="display:none;padding:.75rem 1rem;align-items:center;gap:8px;text-decoration:none" download>
-                    <i class="fas fa-download"></i> Download current CV
-                  </a>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:10px">
-                  <button type="button" class="admin-add-btn" id="resumeUploadBtn"><i class="fas fa-upload"></i> Upload/Replace CV</button>
-                  <button type="button" class="admin-btn-del" id="deleteResumeBtn" style="display:none"><i class="fas fa-trash"></i> Delete CV</button>
-                </div>
-              </div>
-              <input type="file" id="resumeFileInput" accept=".pdf,.doc,.docx" style="display:none" />
-              <div id="resumeUploadProgress" style="display:none;margin-top:8px;font-family:var(--fm);font-size:.75rem;color:var(--text2)"></div>
-            </div>
             <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin:20px 0 12px">Social Links</div>
             <div class="admin-field-row">
               <div class="admin-field"><label class="admin-label"><i class="fab fa-github"></i> GitHub URL</label><input class="admin-input" id="p-github" type="url" /></div>
               <div class="admin-field"><label class="admin-label"><i class="fab fa-linkedin"></i> LinkedIn URL</label><input class="admin-input" id="p-linkedin" type="url" /></div>
             </div>
             <div class="admin-field"><label class="admin-label"><i class="fab fa-telegram"></i> Telegram URL</label><input class="admin-input" id="p-telegram" type="url" /></div>
+
+            <!-- CV Upload -->
+            <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin:20px 0 12px">
+              <i class="fas fa-file-pdf"></i> CV / Resume
+            </div>
+            <div class="admin-field">
+              <div class="img-upload-area" id="cvUploadArea" style="border-color:rgba(0,245,160,.3)">
+                <i class="fas fa-file-pdf" style="font-size:2rem;color:var(--accent);margin-bottom:10px"></i>
+                <div style="font-size:.85rem;color:var(--text2);margin-bottom:6px">Click to upload your CV / Resume</div>
+                <div style="font-size:.72rem;color:var(--text3)">PDF format recommended</div>
+                <input type="file" id="cv-file-input" accept=".pdf,.doc,.docx" style="display:none" />
+              </div>
+              <div id="cvUploadStatus" style="margin-top:10px;display:none">
+                <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+                  <div id="cvProgressBar" style="height:100%;background:var(--accent);width:0%;transition:width .3s"></div>
+                </div>
+                <div id="cvProgressText" style="font-family:var(--fm);font-size:.65rem;color:var(--text2);margin-top:5px"></div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Alex's Dev Portfolio</title>
-  <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
+  <title>Almaw Tadele — Full-Stack Developer & AI Enthusiast</title>
   <meta name="description" content="Portfolio of Almaw Tadele, Full-Stack Developer and AI Enthusiast based in Addis Ababa, Ethiopia." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,8 +69,11 @@
       <div class="hero-content">
         <div class="hero-tag"><span class="hero-dot"></span>Available for opportunities</div>
         <h1 class="hero-name">Hi, I'm<br><span class="grad-text" id="heroName">Almaw Tadele</span></h1>
-        <div class="hero-role">
-          <span id="typingText" style="font-family:var(--fm);font-size:1.05rem;font-weight:700;letter-spacing:.03em;color:#00f5a0;text-shadow:0 0 12px rgba(0,245,160,.5)"></span><span class="cursor"></span>
+        <div class="hero-role" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="width:20px;height:1px;background:rgba(0,245,160,.35);display:inline-block;flex-shrink:0"></span>
+          <span style="font-family:var(--fm);font-size:.65rem;color:rgba(0,245,160,.45);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap">I am a</span>
+          <span id="typingText" style="font-family:var(--fm);font-size:1.1rem;font-weight:700;letter-spacing:.04em;color:#00f5a0;text-shadow:0 0 16px rgba(0,245,160,.6),0 0 32px rgba(0,245,160,.3);transition:color .3s,text-shadow .3s"></span>
+          <span id="typingCursorBar" style="display:inline-block;width:2.5px;height:1em;vertical-align:middle;border-radius:1px;background:#00f5a0;box-shadow:0 0 8px #00f5a0;animation:blink .9s step-end infinite;transition:background .3s,box-shadow .3s;flex-shrink:0"></span>
         </div>
         <p class="hero-bio" id="heroBio">A visionary full-stack engineer building futuristic digital experiences. I merge creativity with code to deliver highly interactive interfaces and seamless user journeys — currently diving deep into the world of AI.</p>
         <div class="hero-actions">
@@ -160,7 +162,7 @@
           </div>
           <div style="display:flex;gap:14px;flex-wrap:wrap">
             <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Get In Touch</a>
-            <a id="resumeLink" href="assets/CV.pdf" download="Almaw-CV.pdf" target="_blank" class="btn btn-outline"><i class="fas fa-download"></i> Download CV</a>
+            <a href="assets/CV.pdf" download class="btn btn-outline" id="cvDownloadBtn"><i class="fas fa-download"></i> Download CV</a>
           </div>
         </div>
       </div>
@@ -251,16 +253,16 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
               <div class="form-group">
                 <label class="form-label" for="fname">First Name</label>
-                <input class="form-input" type="text" id="fname" placeholder="Ftsum" required>
+                <input class="form-input" type="text" id="fname" placeholder="John" required>
               </div>
               <div class="form-group">
                 <label class="form-label" for="lname">Last Name</label>
-                <input class="form-input" type="text" id="lname" placeholder="Dereje" required>
+                <input class="form-input" type="text" id="lname" placeholder="Doe" required>
               </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="femail">Email</label>
-              <input class="form-input" type="email" id="femail" placeholder="ftsumdereje@gmail.com" required>
+              <input class="form-input" type="email" id="femail" placeholder="john@example.com" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="fsubject">Subject</label>

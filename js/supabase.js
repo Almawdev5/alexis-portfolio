@@ -94,7 +94,7 @@ async function loadPortfolioFromDB() {
         location:          personal?.location           || portfolioData.personal.location,
         yearsOfExperience: personal?.years_of_experience || portfolioData.personal.yearsOfExperience,
         avatar:            personal?.avatar             || portfolioData.personal.avatar,
-        resume:            personal?.resume             || portfolioData.personal.resume,
+        resume:            personal?.resume_url || personal?.resume || portfolioData.personal.resume,
         aboutBio:          personal?.about_bio            || portfolioData.personal.bio,
         _id:               personal?.id,
       },

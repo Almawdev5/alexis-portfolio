@@ -160,82 +160,6 @@ function setupUpload(areaId, inputId, previewId, progressId, barId, textId, mult
 // Track uploaded URLs per modal
 let projUploadedUrls = [];
 let certUploadedUrl  = '';
-let currentResumeUrl = '';
-
-function setResumeUI() {
-  const info = $('resumeInfo');
-  const link = $('resumeDownloadLink');
-  const del  = $('deleteResumeBtn');
-  if (!info || !link || !del) return;
-
-  if (currentResumeUrl) {
-    const fileName = currentResumeUrl.split('/').pop().split('?')[0];
-    info.textContent = `Current resume: ${fileName}`;
-    link.href = currentResumeUrl;
-    link.style.display = 'inline-flex';
-    del.style.display = 'inline-flex';
-  } else {
-    info.textContent = 'No resume uploaded.';
-    link.style.display = 'none';
-    del.style.display = 'none';
-  }
-}
-
-function resumeObjectPath(url) {
-  if (!url) return null;
-  try {
-    const prefix = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/`;
-    if (url.startsWith(prefix)) return decodeURIComponent(url.slice(prefix.length));
-    return null;
-  } catch {
-    return null;
-  }
-}
-
-async function deleteResumeObject(url) {
-  const path = resumeObjectPath(url);
-  if (!path) return false;
-  try {
-    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${encodeURI(path)}`, {
-      method: 'DELETE',
-      headers: {
-        'apikey':        SUPABASE_ANON,
-        'Authorization': `Bearer ${SUPABASE_ANON}`,
-      },
-    });
-    return res.ok;
-  } catch (err) {
-    console.error('Resume delete error:', err);
-    return false;
-  }
-}
-
-async function uploadResumeFile(file) {
-  const ext = file.name.split('.').pop().toLowerCase();
-  const mimeMap = {
-    pdf: 'application/pdf',
-    doc: 'application/msword',
-    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  };
-  const mimeType = mimeMap[ext] || file.type || 'application/octet-stream';
-  const name = `resume/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${name}`, {
-    method: 'POST',
-    headers: {
-      'apikey':        SUPABASE_ANON,
-      'Authorization': `Bearer ${SUPABASE_ANON}`,
-      'Content-Type':  mimeType,
-      'x-upsert':      'true',
-    },
-    body: file,
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    console.error('Upload resume error:', err);
-    throw new Error(`Upload failed: ${res.status}`);
-  }
-  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${name}`;
-}
 
 function initUploads() {
   setupUpload('projUploadArea','proj-images-input','projImgPreviews',
@@ -244,47 +168,6 @@ function initUploads() {
   setupUpload('certUploadArea','cert-image-input','certImgPreview',
     'certUploadProgress','certProgressBar','certProgressText', false,
     urls => { certUploadedUrl = urls[0]||''; });
-
-  const uploadBtn = $('resumeUploadBtn');
-  const fileInput = $('resumeFileInput');
-  const deleteBtn = $('deleteResumeBtn');
-  const progress  = $('resumeUploadProgress');
-
-  uploadBtn?.addEventListener('click', () => fileInput?.click());
-  fileInput?.addEventListener('change', async () => {
-    const file = fileInput.files[0];
-    if (!file) return;
-    if (!['pdf','doc','docx'].includes(file.name.split('.').pop().toLowerCase())) {
-      toast('Please upload a PDF or Word document.', 'error');
-      fileInput.value = '';
-      return;
-    }
-    progress.style.display = 'block';
-    progress.textContent = 'Uploading resume...';
-    try {
-      const url = await uploadResumeFile(file);
-      currentResumeUrl = url;
-      await sb.update('personal', $('p-id').value, { resume: url });
-      setResumeUI();
-      toast('Resume uploaded successfully! ✅');
-    } catch (err) {
-      toast(err.message || 'Resume upload failed.', 'error');
-    } finally {
-      progress.style.display = 'none';
-      fileInput.value = '';
-    }
-  });
-
-  deleteBtn?.addEventListener('click', async () => {
-    if (!confirm('Delete current resume/CV from your profile?')) return;
-    const url = currentResumeUrl;
-    let deletedFromStorage = false;
-    if (url) deletedFromStorage = await deleteResumeObject(url);
-    currentResumeUrl = '';
-    await sb.update('personal', $('p-id').value, { resume: '' });
-    setResumeUI();
-    toast(deletedFromStorage ? 'Resume deleted successfully! ✅' : 'Resume removed from profile.');
-  });
 }
 document.addEventListener('DOMContentLoaded', initUploads);
 
@@ -325,8 +208,6 @@ async function renderPersonal() {
   $('p-phone').value    = p.phone    || '';
   $('p-location').value = p.location || '';
   $('p-years').value    = p.years_of_experience || '';
-  currentResumeUrl      = p.resume || '';
-  setResumeUI();
   const socials = await sb.get('social');
   $('p-github').value   = socials.find(s=>s.name==='GitHub')?.url   || '';
   $('p-linkedin').value = socials.find(s=>s.name==='LinkedIn')?.url || '';
@@ -339,7 +220,6 @@ $('savePersonalBtn').addEventListener('click', async () => {
   await sb.update('personal', id, {
     name: $('p-name').value, tagline: $('p-tagline').value,
     bio: $('p-bio').value,
-    resume: currentResumeUrl,
     about_bio: $('p-about-bio')?.value || '', email: $('p-email').value,
     phone: $('p-phone').value, location: $('p-location').value,
     years_of_experience: parseInt($('p-years').value)||0,
@@ -763,3 +643,223 @@ function renderSection(name) {
 document.querySelectorAll('.admin-modal-overlay').forEach(overlay => {
   overlay.addEventListener('click', e => { if(e.target===overlay) overlay.classList.remove('open'); });
 });
+
+// ── CV / RESUME ───────────────────────────────────────────────
+async function renderCV() {
+  // Load current CV from personal table
+  const personal = await sb.getOne('personal');
+  const cvUrl    = personal?.resume || '';
+
+  const nameEl    = document.getElementById('cvFileName');
+  const urlEl     = document.getElementById('cvFileUrl');
+  const downloadEl= document.getElementById('cvDownloadBtn');
+
+  if (cvUrl) {
+    const fileName = cvUrl.split('/').pop() || 'resume.pdf';
+    if (nameEl)     nameEl.textContent  = fileName;
+    if (urlEl)      urlEl.textContent   = 'Stored in Supabase Storage';
+    if (downloadEl) { downloadEl.href = cvUrl; downloadEl.style.display = 'flex'; }
+  } else {
+    if (nameEl) nameEl.textContent = 'No CV uploaded yet';
+    if (urlEl)  urlEl.textContent  = 'Upload a PDF below';
+  }
+
+  // Setup upload
+  const area     = document.getElementById('cvUploadArea');
+  const input    = document.getElementById('cv-file-input');
+  const progress = document.getElementById('cvUploadProgress');
+  const bar      = document.getElementById('cvProgressBar');
+  const text     = document.getElementById('cvProgressText');
+
+  if (!area || !input) return;
+
+  // Remove old listeners by cloning
+  const newArea  = area.cloneNode(true);
+  const newInput = newArea.querySelector('#cv-file-input') || input;
+  area.parentNode.replaceChild(newArea, area);
+
+  newArea.addEventListener('click', () => input.click());
+  newArea.addEventListener('dragover', e => { e.preventDefault(); newArea.style.borderColor = 'var(--accent)'; });
+  newArea.addEventListener('dragleave', () => { newArea.style.borderColor = 'rgba(255,80,80,.3)'; });
+  newArea.addEventListener('drop', e => { e.preventDefault(); handleCvUpload(e.dataTransfer.files[0]); });
+  input.addEventListener('change', () => handleCvUpload(input.files[0]));
+
+  async function handleCvUpload(file) {
+    if (!file) return;
+    if (file.type !== 'application/pdf') { toast('Please upload a PDF file!', 'error'); return; }
+
+    progress.style.display = 'block';
+    bar.style.width = '0%';
+    text.textContent = 'Uploading CV...';
+
+    try {
+      // Upload to Supabase Storage
+      const name = `cv/resume-${Date.now()}.pdf`;
+      const res  = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${name}`, {
+        method:  'POST',
+        headers: {
+          'apikey':        SUPABASE_ANON,
+          'Authorization': `Bearer ${SUPABASE_ANON}`,
+          'Content-Type':  'application/pdf',
+          'x-upsert':      'true',
+        },
+        body: file,
+      });
+
+      if (!res.ok) throw new Error('Upload failed');
+
+      bar.style.width  = '80%';
+      const publicUrl  = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${name}`;
+
+      // Save URL to personal table
+      const p = await sb.getOne('personal');
+      if (p) await sb.update('personal', p.id, { resume: publicUrl });
+
+      bar.style.width  = '100%';
+      text.textContent = '✅ CV uploaded successfully!';
+
+      // Update display
+      if (nameEl)     nameEl.textContent = file.name;
+      if (urlEl)      urlEl.textContent  = 'Stored in Supabase Storage';
+      if (downloadEl) { downloadEl.href = publicUrl; downloadEl.style.display = 'flex'; }
+
+      toast('CV uploaded successfully! ✅');
+      setTimeout(() => { progress.style.display = 'none'; }, 2000);
+
+    } catch (err) {
+      text.textContent = '❌ Upload failed. Try again.';
+      bar.style.background = '#ff5050';
+      toast('Upload failed!', 'error');
+    }
+    input.value = '';
+  }
+}
+
+// Add CV to section router
+const _origRenderSection2 = window.renderSection;
+window.renderSection = function(name) {
+  if (name === 'cv') renderCV();
+  else _origRenderSection2(name);
+};
+
+// ── CV UPLOAD ─────────────────────────────────────────────────
+let cvUploadedUrl = '';
+
+async function uploadCV(file) {
+  const ext      = file.name.split('.').pop().toLowerCase();
+  const name     = `cv/almaw-cv-${Date.now()}.${ext}`;
+  const mimeType = ext === 'pdf' ? 'application/pdf' : 'application/msword';
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${name}`, {
+    method: 'POST',
+    headers: {
+      'apikey':        SUPABASE_ANON,
+      'Authorization': `Bearer ${SUPABASE_ANON}`,
+      'Content-Type':  mimeType,
+      'x-upsert':      'true',
+    },
+    body: file,
+  });
+  if (!res.ok) throw new Error('CV upload failed');
+  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${name}`;
+}
+
+function initCVUpload() {
+  const area     = document.getElementById('cvUploadArea');
+  const input    = document.getElementById('cv-file-input');
+  const status   = document.getElementById('cvUploadStatus');
+  const bar      = document.getElementById('cvProgressBar');
+  const text     = document.getElementById('cvProgressText');
+  const current  = document.getElementById('cvCurrentFile');
+
+  if (!area || !input) return;
+
+  area.addEventListener('click', () => input.click());
+  area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('drag'); });
+  area.addEventListener('dragleave', () => area.classList.remove('drag'));
+  area.addEventListener('drop', e => {
+    e.preventDefault(); area.classList.remove('drag');
+    if (e.dataTransfer.files[0]) handleCV(e.dataTransfer.files[0]);
+  });
+  input.addEventListener('change', () => { if (input.files[0]) handleCV(input.files[0]); });
+
+  async function handleCV(file) {
+    status.style.display = 'block';
+    bar.style.width      = '30%';
+    text.textContent     = `Uploading ${file.name}...`;
+    try {
+      bar.style.width  = '70%';
+      const url        = await uploadCV(file);
+      cvUploadedUrl    = url;
+      bar.style.width  = '100%';
+      text.textContent = '✅ CV uploaded successfully!';
+
+      // Show current file
+      current.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--accent-b);border-radius:8px;padding:12px 16px">
+          <i class="fas fa-file-pdf" style="color:var(--accent);font-size:1.2rem"></i>
+          <div style="flex:1">
+            <div style="font-size:.82rem;font-weight:700">${file.name}</div>
+            <div style="font-family:var(--fm);font-size:.65rem;color:var(--text2)">${(file.size/1024).toFixed(0)} KB</div>
+          </div>
+          <a href="${url}" target="_blank" class="admin-btn-edit" style="width:auto;padding:0 12px;font-size:.72rem;display:flex;align-items:center;gap:6px">
+            <i class="fas fa-eye"></i> Preview
+          </a>
+          <button onclick="removeCVUpload()" class="admin-btn-del"><i class="fas fa-trash"></i></button>
+        </div>`;
+
+      // Auto-save CV URL to personal record
+      const pid = $('p-id').value;
+      if (pid) {
+        await sb.update('personal', pid, { resume_url: url });
+        toast('CV uploaded & saved! ✅');
+      }
+      setTimeout(() => { status.style.display = 'none'; }, 2000);
+    } catch(err) {
+      text.textContent = '❌ Upload failed. Try again.';
+      bar.style.background = '#ff5050';
+    }
+    input.value = '';
+  }
+}
+
+window.removeCVUpload = function() {
+  cvUploadedUrl = '';
+  document.getElementById('cvCurrentFile').innerHTML = '';
+  toast('CV removed. Upload a new one.', 'error');
+};
+
+// Show existing CV when personal section loads
+const _origRenderPersonal = typeof renderPersonal === 'function' ? renderPersonal : null;
+
+async function showExistingCV(p) {
+  const current = document.getElementById('cvCurrentFile');
+  if (!current) return;
+  const url = p.resume_url || p.resume;
+  if (url && url.startsWith('http')) {
+    cvUploadedUrl = url;
+    const filename = url.split('/').pop();
+    current.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--accent-b);border-radius:8px;padding:12px 16px">
+        <i class="fas fa-file-pdf" style="color:var(--accent);font-size:1.2rem"></i>
+        <div style="flex:1">
+          <div style="font-size:.82rem;font-weight:700">${filename}</div>
+          <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent)">Current CV</div>
+        </div>
+        <a href="${url}" target="_blank" class="admin-btn-edit" style="width:auto;padding:0 12px;font-size:.72rem;display:flex;align-items:center;gap:6px">
+          <i class="fas fa-eye"></i> Preview
+        </a>
+        <button onclick="removeCVUpload()" class="admin-btn-del"><i class="fas fa-trash"></i></button>
+      </div>`;
+  }
+}
+
+// Hook into renderPersonal
+const __origRender = window.renderSection;
+window.renderSection = async function(name) {
+  await __origRender(name);
+  if (name === 'personal') {
+    const p = await sb.getOne('personal');
+    if (p) showExistingCV(p);
+    initCVUpload();
+  }
+};

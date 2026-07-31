@@ -204,6 +204,10 @@ function setupForm() {
 function updatePersonalInfo(d) {
   const p = d.personal;
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  // Update CV download links
+  document.querySelectorAll('a[download], a[href*="CV.pdf"], a[href*="resume"]').forEach(link => {
+    if (p.resume) link.href = p.resume;
+  });
   set('heroName', p.name);
   set('heroBio', p.bio);
   set('hcName',   p.name);
@@ -212,6 +216,9 @@ function updatePersonalInfo(d) {
   set('hcEmail',  p.email);
   set('hcPhone',  p.phone);
   set('aboutYears', p.yearsOfExperience + '+');
+  // Update CV download button
+  const cvBtn = document.getElementById('cvDownloadBtn');
+  if (cvBtn && p.resume) { cvBtn.href = p.resume; cvBtn.setAttribute('download',''); }
   // About bio — use full about bio (separate from hero bio)
   const aboutBio = document.getElementById('aboutBio');
   if (aboutBio) aboutBio.textContent = p.aboutBio || p.bio;
@@ -223,16 +230,6 @@ function updatePersonalInfo(d) {
   if (hcSocial) hcSocial.innerHTML = d.social.map(s=>
     `<a href="${s.url}" target="_blank" class="soc-btn" title="${s.name}"><i class="${s.icon}"></i></a>`
   ).join('');
-
-  const resumeLink = document.getElementById('resumeLink');
-  if (resumeLink) {
-    if (p.resume) {
-      resumeLink.href = p.resume;
-      resumeLink.style.display = 'inline-flex';
-    } else {
-      resumeLink.style.display = 'none';
-    }
-  }
 
   const contactItems = document.getElementById('contactItems');
   if (contactItems) contactItems.innerHTML = `
@@ -358,16 +355,6 @@ function init() {
       const yr  = document.getElementById('aboutYears');
       if (bio) bio.textContent = d.personal.aboutBio || d.personal.bio;
       if (yr)  yr.textContent  = d.personal.yearsOfExperience + '+';
-
-      const resumeLink = document.getElementById('resumeLink');
-      if (resumeLink) {
-        if (d.personal.resume) {
-          resumeLink.href = d.personal.resume;
-          resumeLink.style.display = 'inline-flex';
-        } else {
-          resumeLink.style.display = 'none';
-        }
-      }
     }
 
     observeAll();
